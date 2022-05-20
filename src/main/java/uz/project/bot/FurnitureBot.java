@@ -65,6 +65,11 @@ public class FurnitureBot extends TelegramLongPollingBot {
                     var student = botController.getStudentWithId(1L);
                     sendMessage(message, student.toString(), false);
                 }
+
+                if (text.equals("Product")) {
+                    var product = botController.getProductWithID(1L);
+                    sendMessage(message, product.toString(), false);
+                }
             }
 
         }
@@ -97,7 +102,7 @@ public class FurnitureBot extends TelegramLongPollingBot {
     private void sendMessage(Message message, String text, Boolean openKey) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setText(text);
-        sendMessage.setParseMode(ParseMode.MARKDOWN);
+        sendMessage.setParseMode(ParseMode.HTML);
         sendMessage.setChatId(message.getChatId().toString());
 
         if (openKey)
