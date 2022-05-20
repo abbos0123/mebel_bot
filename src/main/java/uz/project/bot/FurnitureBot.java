@@ -9,6 +9,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import uz.project.controllers.BotController;
 import uz.project.models.Language;
 import uz.project.services.StudentService;
 import uz.project.utilds.BotService;
@@ -21,7 +22,7 @@ public class FurnitureBot extends TelegramLongPollingBot {
     private Long currentChatId = -1L;
 
     @Autowired
-    private StudentService studentService;
+    private BotController botController;
 
     @Value("${bot.username}")
     private String username;
@@ -61,8 +62,8 @@ public class FurnitureBot extends TelegramLongPollingBot {
                 }
 
                 if (text.equals("Student")) {
-                    var student = studentService.getStudent(1L);
-                    sendMessage(message, student.toString(), true);
+                    var student = botController.getStudentWithId(1L);
+                    sendMessage(message, student.toString(), false);
                 }
             }
 

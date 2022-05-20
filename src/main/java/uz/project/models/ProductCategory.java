@@ -1,0 +1,12 @@
+package uz.project.models;
+
+public enum ProductCategory {
+    HOME_APPLIANCE,
+    TELEPHONE_AND_ACCESSORY,
+    LAPTOPS_AND_DESKTOPS,
+    CARPETS,
+    AUDIO_APPLIANCE,
+    SPORTS_EQUIPMENTS,
+    GIFTS_AND_SOUVENIRS,
+    KITCHEN_APPLIANCE
+}
