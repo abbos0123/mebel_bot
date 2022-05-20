@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -57,24 +58,23 @@ public class FurnitureBot extends TelegramLongPollingBot {
                     System.out.println();
                 }
 
-                if (text.equals("Uzbek") || text.equals("Russian") || text.equals("English") || text.equals("Krill")) {
-                    BotService.setLanguage(this, text);
-                }
+            } else if (message.hasContact()) {
+                var contact = message.getContact();
+                BotService.sendMessage(this, message, contact.toString());
+            }
 
-                if (text.equals("Student")) {
-                    var student = botController.getStudentWithId(1L);
-                    sendMessage(message, student.toString(), false);
-                }
+        }else if (update.hasCallbackQuery()){
+            Message message = update.getCallbackQuery().getMessage();
+            CallbackQuery callbackQuery = update.getCallbackQuery();
+            String data = callbackQuery.getData();
 
-                if (text.equals("Product")) {
-                    var product = botController.getProductWithID(1L);
-                    sendMessage(message, product.toString(), false);
-                }
+            if (data.equals("Uzbek") || data.equals("Russian") || data.equals("English") || data.equals("Krill")) {
+                BotService.setLanguage(this, data);
+                BotService.showChosenLanguage(this, message, data);
+            }
 
-                if (text.equals("User")) {
-                    var user = botController.getUserWithId(1L);
-                    sendMessage(message, user.toString(), false);
-                }
+            if (data.equals("share_contact")){
+                BotService.sendMessage(this, message, "Contact.....");
             }
 
         }
@@ -97,22 +97,15 @@ public class FurnitureBot extends TelegramLongPollingBot {
     }
 
     private void startBot(Message message) {
-        sendMessage(message,
-                " Uzbek    ->   Iltimos tilni tanlan " +
+        BotService.sendMessageForLanguage(this, message,
+                " Uzbek    ->   Iltimos tilni tanlang" +
                         "\nРусский  ->  Пожалуйста, выберите язык " +
                         "\nEnglish ->  Please choose Language " +
-                        "\nКрилл    ->  Илтимос тилни танланг)", true);
+                        "\nКрилл    ->  Илтимос тилни танланг");
     }
 
-    private void sendMessage(Message message, String text, Boolean openKey) {
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setText(text);
-        sendMessage.setParseMode(ParseMode.HTML);
-        sendMessage.setChatId(message.getChatId().toString());
 
-        if (openKey)
-            BotService.setLanguageKeyboardButton(sendMessage);
-
+    public  void sendMessage(Message message, SendMessage sendMessage){
         try {
             execute(sendMessage);
             System.out.println(message.getChatId().toString());
@@ -120,5 +113,6 @@ public class FurnitureBot extends TelegramLongPollingBot {
             throw new RuntimeException(e);
         }
     }
+
 
 }
