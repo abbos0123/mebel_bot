@@ -12,15 +12,16 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import uz.project.controllers.BotController;
 import uz.project.models.Language;
-import uz.project.services.StudentService;
 import uz.project.utilds.BotService;
 
 
 @Service
 public class FurnitureBot extends TelegramLongPollingBot {
-
     private Language language = Language.UZBEK;
     private Long currentChatId = -1L;
+
+    private boolean isName = false;
+    private boolean isSurname = false;
 
     @Autowired
     private BotController botController;
@@ -56,14 +57,44 @@ public class FurnitureBot extends TelegramLongPollingBot {
                 if (text.equals("/start")) {
                     startBot(message);
                     System.out.println();
+                } else if (text.equals("Kategory") || text.equals("Категория") || text.equals("Category") || text.equals("Категорйa")) {
+                    BotService.sendMessage(this, message, text);
+
+                } else if (text.equals("Buyurtmalar") || text.equals("Заказы") || text.equals("Orders") || text.equals("Буюртмалар")) {
+                    BotService.sendMessage(this, message, text);
+
+                } else if (text.equals("Savatcha") || text.equals("Корзина") || text.equals("Basket") || text.equals("Савадча")) {
+                    BotService.sendMessage(this, message, text);
+
+                } else if (text.equals("Profil") || text.equals("Профиль") || text.equals("Profile") || text.equals("Профил")) {
+                    BotService.sendMessage(this, message, text);
+
+                } else if (text.equals("Orqaga") || text.equals("Назад") || text.equals("Back") || text.equals("Орқага")) {
+                    BotService.sendMessageForSharingContact(this, message, "Orqaga", language);
+
+                } else if (isName) {
+
+                    BotService.sendMessage(this, message, message.getText());
+                    isName = false;
+                    BotService.askUsersSurname(this, language, message);
+
+                } else if (isSurname) {
+
+                    BotService.sendMessage(this, message, message.getText());
+                    isSurname = false;
+                    BotService.sendMessage(this, message, "Siz mumfaqqiyatli o'tdingiz...");
+                    BotService.sendMessageForMainMenu(this, message, "", language);
+
                 }
 
             } else if (message.hasContact()) {
                 var contact = message.getContact();
                 BotService.sendMessage(this, message, contact.toString());
+                BotService.askUsersName(this, language, message);
+
             }
 
-        }else if (update.hasCallbackQuery()){
+        } else if (update.hasCallbackQuery()) {
             Message message = update.getCallbackQuery().getMessage();
             CallbackQuery callbackQuery = update.getCallbackQuery();
             String data = callbackQuery.getData();
@@ -73,7 +104,7 @@ public class FurnitureBot extends TelegramLongPollingBot {
                 BotService.showChosenLanguage(this, message, data);
             }
 
-            if (data.equals("share_contact")){
+            if (data.equals("share_contact")) {
                 BotService.sendMessage(this, message, "Contact.....");
             }
 
@@ -92,6 +123,22 @@ public class FurnitureBot extends TelegramLongPollingBot {
         return currentChatId;
     }
 
+    public boolean isName() {
+        return isName;
+    }
+
+    public void setName(boolean name) {
+        isName = name;
+    }
+
+    public boolean isSurname() {
+        return isSurname;
+    }
+
+    public void setSurname(boolean surname) {
+        isSurname = surname;
+    }
+
     public void setCurrentChatId(Long currentChatId) {
         this.currentChatId = currentChatId;
     }
@@ -105,7 +152,7 @@ public class FurnitureBot extends TelegramLongPollingBot {
     }
 
 
-    public  void sendMessage(Message message, SendMessage sendMessage){
+    public void sendMessage(Message message, SendMessage sendMessage) {
         try {
             execute(sendMessage);
             System.out.println(message.getChatId().toString());
