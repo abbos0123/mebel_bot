@@ -59,6 +59,7 @@ public class FurnitureBot extends TelegramLongPollingBot {
                     System.out.println();
                 } else if (text.equals("Kategory") || text.equals("Категория") || text.equals("Category") || text.equals("Категорйa")) {
                     BotService.sendMessage(this, message, text);
+                    BotService.sendMessageForCategories(this, message, language, "...");
 
                 } else if (text.equals("Buyurtmalar") || text.equals("Заказы") || text.equals("Orders") || text.equals("Буюртмалар")) {
                     BotService.sendMessage(this, message, text);
