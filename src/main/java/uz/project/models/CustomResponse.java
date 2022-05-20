@@ -1,4 +1,4 @@
-package uz.project.utilds;
+package uz.project.models;
 
 public class CustomResponse {
 

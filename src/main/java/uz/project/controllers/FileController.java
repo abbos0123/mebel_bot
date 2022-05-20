@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uz.project.models.FileStorage;
 import uz.project.services.FileService;
-import uz.project.utilds.CustomResponse;
+import uz.project.models.CustomResponse;
 
 import javax.ws.rs.NotFoundException;
 import java.net.MalformedURLException;
