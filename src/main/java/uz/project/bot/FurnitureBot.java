@@ -70,6 +70,11 @@ public class FurnitureBot extends TelegramLongPollingBot {
                     var product = botController.getProductWithID(1L);
                     sendMessage(message, product.toString(), false);
                 }
+
+                if (text.equals("User")) {
+                    var user = botController.getUserWithId(1L);
+                    sendMessage(message, user.toString(), false);
+                }
             }
 
         }
@@ -114,7 +119,6 @@ public class FurnitureBot extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);
         }
-
     }
 
 }
