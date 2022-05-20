@@ -1,5 +1,6 @@
 package uz.project.bot;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -9,6 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import uz.project.models.Language;
+import uz.project.services.StudentService;
 import uz.project.utilds.BotService;
 
 
@@ -18,6 +20,8 @@ public class FurnitureBot extends TelegramLongPollingBot {
     private Language language = Language.UZBEK;
     private Long currentChatId = -1L;
 
+    @Autowired
+    private StudentService studentService;
 
     @Value("${bot.username}")
     private String username;
@@ -56,6 +60,10 @@ public class FurnitureBot extends TelegramLongPollingBot {
                     BotService.setLanguage(this, text);
                 }
 
+                if (text.equals("Student")) {
+                    var student = studentService.getStudent(1L);
+                    sendMessage(message, student.toString(), true);
+                }
             }
 
         }
@@ -92,7 +100,7 @@ public class FurnitureBot extends TelegramLongPollingBot {
         sendMessage.setChatId(message.getChatId().toString());
 
         if (openKey)
-        BotService.setLanguageKeyboardButton(sendMessage);
+            BotService.setLanguageKeyboardButton(sendMessage);
 
         try {
             execute(sendMessage);
