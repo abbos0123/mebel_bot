@@ -1,4 +1,4 @@
-package uz.project.utilds;
+package uz.project.bot;
 
 
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
@@ -9,7 +9,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import uz.project.bot.FurnitureBot;
 import uz.project.models.*;
 
 import java.util.ArrayList;
@@ -209,6 +208,28 @@ public class BotService {
 
     }
 
+    public static void setInlineKeyboardButtonForSubCategories(SendMessage sendMessage, List<SpecialCategory> list) {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineButtons = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
+
+        for (int i = 0; i < list.size(); i++) {
+
+            var button = new InlineKeyboardButton();
+
+            button.setText(list.get(i).getName());
+            button.setCallbackData("special_product_" + list.get(i).getId());
+
+            inlineKeyboardButtonList.add(button);
+            inlineButtons.add(inlineKeyboardButtonList);
+            inlineKeyboardButtonList = new ArrayList<>();
+
+        }
+
+        inlineKeyboardMarkup.setKeyboard(inlineButtons);
+        sendMessage.setReplyMarkup(inlineKeyboardMarkup);
+
+    }
 
     public static void sendMessage(FurnitureBot furnitureBot, Message message, String text) {
         SendMessage sendMessage = new SendMessage();
@@ -383,6 +404,57 @@ public class BotService {
 
         furnitureBot.sendMessage(message, sendMessage);
 
+    }
+
+    public static void sendMessageForSubCategories(FurnitureBot furnitureBot, Message message, List<SpecialCategory> categories) {
+
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setParseMode(ParseMode.HTML);
+        sendMessage.setChatId(message.getChatId().toString());
+        var msgText = "Quyidagi kategorialar bo'yicha mashsulot topishingiz mumkin :-)";
+
+        if (categories.size() > 0) {
+            switch (furnitureBot.getLanguage().toString()) {
+                case "RUSSIAN": {
+                    msgText = "Вы можете найти товары в следующих категориях :-)";
+                }
+                break;
+                case "ENGLISH": {
+                    msgText = "You can find products in the following categories :-)";
+                }
+                break;
+                case "KRILL": {
+                    msgText = "Қуйидаги категориалар бўйича машсулот топишингиз мумкин :-)";
+                }
+                break;
+            }
+        }else {
+            switch (furnitureBot.getLanguage().toString()) {
+
+                case "UZBEK": {
+                    msgText = "Afsuski mahsulot turi mavjud emas :-(";
+                }
+                break;
+
+                case "RUSSIAN": {
+                    msgText = "К сожалению, тип продукта недоступен :-(";
+                }
+                break;
+                case "ENGLISH": {
+                    msgText = "Unfortunately the product type is not available :-(";
+                }
+                break;
+                case "KRILL": {
+                    msgText = "Aфсуски маҳсулот тури мавжуд емас :-(";
+                }
+                break;
+            }
+        }
+
+        sendMessage.setText(msgText);
+        BotService.setInlineKeyboardButtonForSubCategories(sendMessage, categories);
+
+        furnitureBot.sendMessage(message, sendMessage);
     }
 
     public static void sendMessageForProfile(FurnitureBot furnitureBot, Message message, Language language, User user) {

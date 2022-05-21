@@ -4,18 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import uz.project.controllers.BotController;
-import uz.project.models.Language;
-import uz.project.models.Order;
-import uz.project.models.Product;
-import uz.project.models.User;
-import uz.project.utilds.BotService;
+import uz.project.models.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,9 +144,11 @@ public class FurnitureBot extends TelegramLongPollingBot {
                         break;
                     }
                 }
-
                 BotService.sendMessage(this, message, product.toString());
 
+            } else if (data.equals("FURNITURE") || data.equals("HOME_APPLIANCE") || data.equals("TELEPHONE_AND_ACCESSORY") || data.equals("LAPTOPS_AND_DESKTOPS") || data.equals("CARPETS") || data.equals("AUDIO_APPLIANCE") || data.equals("SPORTS_EQUIPMENTS") || data.equals("GIFTS_AND_SOUVENIRS") || data.equals("KITCHEN_APPLIANCE")) {
+                List<SpecialCategory> categories = botController.getAllSubCategories(data);
+                BotService.sendMessageForSubCategories(this, message, categories);
             }
 
 
