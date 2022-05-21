@@ -2,6 +2,8 @@ package uz.project.services;
 
 import org.springframework.stereotype.Service;
 import uz.project.models.Product;
+import uz.project.models.ProductCategory;
+import uz.project.models.SpecialCategory;
 import uz.project.repositories.ProductRepository;
 
 import java.util.List;
@@ -66,5 +68,12 @@ public class ProductService {
     //getting all products
     public List<Product> getAllProducts(){
         return productRepository.findAll();
+    }
+    public List<Product> getAllProductsOfSpecialCategories(SpecialCategory specialCategory){
+        return productRepository.findAllByProductSpecialCategory(specialCategory);
+    }
+
+    public List<Product> getAllProductsOfMainCategories(ProductCategory productCategory){
+        return productRepository.findAllByProductCategory(productCategory);
     }
 }

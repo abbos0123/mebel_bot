@@ -5,8 +5,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.project.models.CustomResponse;
 import uz.project.models.Product;
+import uz.project.models.ProductCategory;
 import uz.project.services.FileService;
 import uz.project.services.ProductService;
+import uz.project.services.SpecialCategoryService;
 
 import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
@@ -19,10 +21,13 @@ public class ProductController {
     private final ProductService productService;
     private final FileService fileService;
 
+    private final SpecialCategoryService specialCategoryService;
 
-    public ProductController(ProductService productService, FileService fileService) {
+
+    public ProductController(ProductService productService, FileService fileService, SpecialCategoryService specialCategoryService) {
         this.productService = productService;
         this.fileService = fileService;
+        this.specialCategoryService = specialCategoryService;
     }
 
     //adding product
@@ -86,7 +91,7 @@ public class ProductController {
 
     //updating product
     @PutMapping("/update")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product) throws Exception{
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product) throws Exception {
 
         checkValidation(product);
 
@@ -112,6 +117,42 @@ public class ProductController {
 
         try {
             var list = productService.getAllProducts();
+
+            if (list == null || list.isEmpty())
+                ResponseEntity.ok(new ArrayList<>());
+            return ResponseEntity.ok(list);
+
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ArrayList<>());
+        }
+    }
+
+    @GetMapping("/all/category")
+    public ResponseEntity<List<Product>> findAllProductsOfCategory(@RequestParam(name = "category") String productCategoryName) throws Exception{
+        var productCategory = ProductCategory.valueOf(productCategoryName);
+
+
+        try {
+            var list = productService.getAllProductsOfMainCategories(productCategory);
+
+            if (list == null || list.isEmpty())
+                ResponseEntity.ok(new ArrayList<>());
+            return ResponseEntity.ok(list);
+
+        } catch (Exception e) {
+            return ResponseEntity.ok(new ArrayList<>());
+        }
+    }
+
+
+    @GetMapping("/all/category/{special_category_id}")
+    public ResponseEntity<List<Product>> findAllProductsOfCategory(@PathVariable Long special_category_id) {
+
+        if (!specialCategoryService.doesSpecialCategoryExist(special_category_id)) {
+            throw new NotFoundException("This category does not exist !");
+        }
+        try {
+            var list = productService.getAllProductsOfSpecialCategories(specialCategoryService.getSpecialCategoryByID(special_category_id));
 
             if (list == null || list.isEmpty())
                 ResponseEntity.ok(new ArrayList<>());
