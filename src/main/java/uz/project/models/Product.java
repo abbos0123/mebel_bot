@@ -34,6 +34,11 @@ public class Product {
     public Product() {
     }
 
+    public Product(String name, long id) {
+    this.name = name;
+    this.id = id;
+    }
+
     public Product(String name, String description, Double price, ProductCategory productCategory, List<FileStorage> imageList) {
         this.name = name;
         this.description = description;

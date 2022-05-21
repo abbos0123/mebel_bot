@@ -34,7 +34,7 @@ public class BotServiceHelper {
                             inlineKeyboardButton1.setText("Бытовая техника");
                             inlineKeyboardButton1.setCallbackData("HOME_APPLIANCE");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "ENGLISH":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
@@ -42,7 +42,7 @@ public class BotServiceHelper {
                             inlineKeyboardButton1.setText("Home appliance");
                             inlineKeyboardButton1.setCallbackData("HOME_APPLIANCE");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "KRILL":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
@@ -50,7 +50,7 @@ public class BotServiceHelper {
                             inlineKeyboardButton1.setText("Маиший техникалар");
                             inlineKeyboardButton1.setCallbackData("HOME_APPLIANCE");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                     }
                 }
@@ -68,26 +68,26 @@ public class BotServiceHelper {
                         case "RUSSIAN":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Бытовая техника");
+                            inlineKeyboardButton1.setText("Телефоны, аксессуары, гаджеты");
                             inlineKeyboardButton1.setCallbackData("TELEPHONE_AND_ACCESSORY");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "ENGLISH":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Home appliance");
+                            inlineKeyboardButton1.setText("Phones, accessories, gadgets");
                             inlineKeyboardButton1.setCallbackData("TELEPHONE_AND_ACCESSORY");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "KRILL":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Маиший техникалар");
+                            inlineKeyboardButton1.setText("Телефонлар, аксесуралар, гаджетлар");
                             inlineKeyboardButton1.setCallbackData("TELEPHONE_AND_ACCESSORY");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                     }
                 }
@@ -97,7 +97,7 @@ public class BotServiceHelper {
                         case "UZBEK":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Maishiy texnikalar");
+                            inlineKeyboardButton1.setText("Noutbuk, PC, Printer");
                             inlineKeyboardButton1.setCallbackData("LAPTOPS_AND_DESKTOPS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
                             inlineButtons.add(inlineKeyboardButtonList);
@@ -105,26 +105,26 @@ public class BotServiceHelper {
                         case "RUSSIAN":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Бытовая техника");
+                            inlineKeyboardButton1.setText("Ноутбук, ПК, принтер");
                             inlineKeyboardButton1.setCallbackData("LAPTOPS_AND_DESKTOPS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "ENGLISH":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Home appliance");
+                            inlineKeyboardButton1.setText("Laptop, PC, Printer");
                             inlineKeyboardButton1.setCallbackData("LAPTOPS_AND_DESKTOPS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "KRILL":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Маиший техникалар");
+                            inlineKeyboardButton1.setText("Ноутбук, ПC, Принтер");
                             inlineKeyboardButton1.setCallbackData("LAPTOPS_AND_DESKTOPS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                     }
                 }
@@ -134,7 +134,7 @@ public class BotServiceHelper {
                         case "UZBEK":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Maishiy texnikalar");
+                            inlineKeyboardButton1.setText("Gilamlar");
                             inlineKeyboardButton1.setCallbackData("CARPETS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
                             inlineButtons.add(inlineKeyboardButtonList);
@@ -142,26 +142,26 @@ public class BotServiceHelper {
                         case "RUSSIAN":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Бытовая техника");
+                            inlineKeyboardButton1.setText("ковры");
                             inlineKeyboardButton1.setCallbackData("CARPETS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "ENGLISH":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Home appliance");
+                            inlineKeyboardButton1.setText("Carpets");
                             inlineKeyboardButton1.setCallbackData("CARPETS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "KRILL":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Маиший техникалар");
+                            inlineKeyboardButton1.setText("Гиламлар");
                             inlineKeyboardButton1.setCallbackData("CARPETS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                     }
                 }
@@ -171,7 +171,7 @@ public class BotServiceHelper {
                         case "UZBEK":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Maishiy texnikalar");
+                            inlineKeyboardButton1.setText("Televizor, Audio jihoz");
                             inlineKeyboardButton1.setCallbackData("AUDIO_APPLIANCE");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
                             inlineButtons.add(inlineKeyboardButtonList);
@@ -179,26 +179,26 @@ public class BotServiceHelper {
                         case "RUSSIAN":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Бытовая техника");
+                            inlineKeyboardButton1.setText("ТВ, Аудиотехника");
                             inlineKeyboardButton1.setCallbackData("AUDIO_APPLIANCE");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "ENGLISH":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Home appliance");
+                            inlineKeyboardButton1.setText("Tv, Audio appliance");
                             inlineKeyboardButton1.setCallbackData("AUDIO_APPLIANCE");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "KRILL":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Маиший техникалар");
+                            inlineKeyboardButton1.setText("Телевизор, Aудио жиҳоз");
                             inlineKeyboardButton1.setCallbackData("AUDIO_APPLIANCE");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                     }
                 }
@@ -208,7 +208,7 @@ public class BotServiceHelper {
                         case "UZBEK":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Maishiy texnikalar");
+                            inlineKeyboardButton1.setText("Sport anjomlari");
                             inlineKeyboardButton1.setCallbackData("SPORTS_EQUIPMENTS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
                             inlineButtons.add(inlineKeyboardButtonList);
@@ -216,26 +216,26 @@ public class BotServiceHelper {
                         case "RUSSIAN":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Бытовая техника");
+                            inlineKeyboardButton1.setText("Спортивное оборудование");
                             inlineKeyboardButton1.setCallbackData("SPORTS_EQUIPMENTS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "ENGLISH":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Home appliance");
+                            inlineKeyboardButton1.setText("Sports equipment");
                             inlineKeyboardButton1.setCallbackData("SPORTS_EQUIPMENTS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "KRILL":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Маиший техникалар");
+                            inlineKeyboardButton1.setText("Спорт анжомлари");
                             inlineKeyboardButton1.setCallbackData("SPORTS_EQUIPMENTS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                     }
                 }
@@ -245,7 +245,7 @@ public class BotServiceHelper {
                         case "UZBEK":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Maishiy texnikalar");
+                            inlineKeyboardButton1.setText("Sovg'alar, suvinerlar");
                             inlineKeyboardButton1.setCallbackData("GIFTS_AND_SOUVENIRS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
                             inlineButtons.add(inlineKeyboardButtonList);
@@ -253,26 +253,26 @@ public class BotServiceHelper {
                         case "RUSSIAN":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Бытовая техника");
+                            inlineKeyboardButton1.setText("Подарки, сувениры");
                             inlineKeyboardButton1.setCallbackData("GIFTS_AND_SOUVENIRS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "ENGLISH":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Home appliance");
-                            inlineKeyboardButton1.setCallbackData("HOME_APPLIANCE");
+                            inlineKeyboardButton1.setText("Gifts, souvenirs");
+                            inlineKeyboardButton1.setCallbackData("GIFTS_AND_SOUVENIRS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "KRILL":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Маиший техникалар");
+                            inlineKeyboardButton1.setText("Совғалар, сувинерлар");
                             inlineKeyboardButton1.setCallbackData("GIFTS_AND_SOUVENIRS");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                     }
                 }
@@ -282,7 +282,7 @@ public class BotServiceHelper {
                         case "UZBEK":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Maishiy texnikalar");
+                            inlineKeyboardButton1.setText("Oshxona jihozlari");
                             inlineKeyboardButton1.setCallbackData("KITCHEN_APPLIANCE");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
                             inlineButtons.add(inlineKeyboardButtonList);
@@ -290,26 +290,26 @@ public class BotServiceHelper {
                         case "RUSSIAN":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Бытовая техника");
+                            inlineKeyboardButton1.setText("Кухонные приборы");
                             inlineKeyboardButton1.setCallbackData("KITCHEN_APPLIANCE");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "ENGLISH":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Home appliance");
+                            inlineKeyboardButton1.setText("Kitchen appliances");
                             inlineKeyboardButton1.setCallbackData("KITCHEN_APPLIANCE");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                         case "KRILL":{
                             List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
                             InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-                            inlineKeyboardButton1.setText("Маиший техникалар");
+                            inlineKeyboardButton1.setText("Ошхона жиҳозлари");
                             inlineKeyboardButton1.setCallbackData("KITCHEN_APPLIANCE");
                             inlineKeyboardButtonList.add(inlineKeyboardButton1);
-                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
                         } break;
                     }
                 }
