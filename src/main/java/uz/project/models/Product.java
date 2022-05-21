@@ -24,6 +24,13 @@ public class Product {
     @Column(name = "product_category")
     private ProductCategory productCategory;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "product_special_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "sp_category_id")
+    )
+    private SpecialCategory productSpecialCategory;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "product_images_table",
@@ -35,8 +42,8 @@ public class Product {
     }
 
     public Product(String name, long id) {
-    this.name = name;
-    this.id = id;
+        this.name = name;
+        this.id = id;
     }
 
     public Product(String name, String description, Double price, ProductCategory productCategory, List<FileStorage> imageList) {
@@ -100,7 +107,7 @@ public class Product {
             imageList = new ArrayList<>();
         }
 
-            imageList.add(imageFile);
+        imageList.add(imageFile);
 
         return imageList;
     }
@@ -119,7 +126,15 @@ public class Product {
             return false;
         }
 
-       return imageList.remove(imageFile);
+        return imageList.remove(imageFile);
+    }
+
+    public SpecialCategory getProductSpecialCategory() {
+        return productSpecialCategory;
+    }
+
+    public void setProductSpecialCategory(SpecialCategory productSpecialCategory) {
+        this.productSpecialCategory = productSpecialCategory;
     }
 
     @Override
@@ -130,6 +145,7 @@ public class Product {
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", productCategory=" + productCategory +
+                ", productSpecialCategory=" + productSpecialCategory +
                 ", imageList=" + imageList +
                 '}';
     }

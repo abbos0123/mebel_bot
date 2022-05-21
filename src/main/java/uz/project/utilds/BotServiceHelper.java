@@ -18,6 +18,43 @@ public class BotServiceHelper {
         for (ProductCategory productCategory : ProductCategory.values()) {
 
             switch (productCategory.toString()) {
+                case "FURNITURE": {
+                    switch (language.toString()){
+                        case "UZBEK":{
+                            List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
+                            InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
+                            inlineKeyboardButton1.setText("Mebellar");
+                            inlineKeyboardButton1.setCallbackData("FURNITURE");
+                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
+                        } break;
+                        case "RUSSIAN":{
+                            List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
+                            InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
+                            inlineKeyboardButton1.setText("Мебель");
+                            inlineKeyboardButton1.setCallbackData("FURNITURE");
+                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
+                        } break;
+                        case "ENGLISH":{
+                            List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
+                            InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
+                            inlineKeyboardButton1.setText("Furniture");
+                            inlineKeyboardButton1.setCallbackData("FURNITURE");
+                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
+                        } break;
+                        case "KRILL":{
+                            List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
+                            InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
+                            inlineKeyboardButton1.setText("Мебеллар");
+                            inlineKeyboardButton1.setCallbackData("FURNITURE");
+                            inlineKeyboardButtonList.add(inlineKeyboardButton1);
+                            inlineButtons.add(inlineKeyboardButtonList);
+                        } break;
+                    }
+                }break;
+
                 case "HOME_APPLIANCE": {
                     switch (language.toString()){
                         case "UZBEK":{

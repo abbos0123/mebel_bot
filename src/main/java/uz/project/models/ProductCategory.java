@@ -1,6 +1,7 @@
 package uz.project.models;
 
 public enum ProductCategory {
+    FURNITURE,
     HOME_APPLIANCE,
     TELEPHONE_AND_ACCESSORY,
     LAPTOPS_AND_DESKTOPS,
