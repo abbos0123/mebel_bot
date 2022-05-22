@@ -2,10 +2,8 @@ package uz.project.services;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import uz.project.models.Student;
 import uz.project.models.User;
 import uz.project.repositories.UserRepository;
-
 import java.util.List;
 
 @Service
@@ -38,11 +36,15 @@ public class UserService {
         return null;
     }
 
-    public Student getUserById(Integer id) {
-        var student = new Student();
-        student.setAge(21);
-        student.setName("Abbos");
-        return student;
+    public User getUserByChatId(Long chatId) {
+        if (chatId == null || chatId < 0)
+            return null;
+
+        if (userRepository.existsUserByChatId(chatId)) {
+            return userRepository.findUserByChatId(chatId);
+        }
+
+        return null;
     }
 
     public User getUserByUsername(String username) {
@@ -56,9 +58,19 @@ public class UserService {
         return null;
     }
 
+    public User getUserByPhoneNumber(String phoneNumber) {
+        if (phoneNumber == null || phoneNumber.isEmpty())
+            return null;
+
+        if (userRepository.existsUserByPhoneNumber(phoneNumber)) {
+            return userRepository.findUserByPhoneNumber(phoneNumber);
+        }
+
+        return null;
+    }
+
     public String delete(Long id) {
         User user = userRepository.findUserById(id);
-
         userRepository.delete(user);
 
         return user.getUsername() + " is deleted!";
@@ -70,6 +82,14 @@ public class UserService {
 
     public boolean doesUserExist(Long id) {
         return userRepository.existsUserById(id);
+    }
+
+    public boolean doesUserExistByChatId(Long id) {
+        return userRepository.existsUserByChatId(id);
+    }
+
+    public boolean doesUserExistByPhoneNumber(String phoneNumber) {
+        return userRepository.existsUserByPhoneNumber(phoneNumber);
     }
 
     public User update(User user, boolean isPasswordChange) {

@@ -2,6 +2,7 @@ package uz.project.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import uz.project.models.CustomResponse;
 import uz.project.models.Role;
@@ -11,25 +12,23 @@ import uz.project.utilds.RegistrationException;
 
 import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/client/register")
     public ResponseEntity<?> saveUser(@RequestBody User userInput) throws RegistrationException {
         var role = new Role();
         role.setName("ROLE_USER");
-//        var set = new HashSet<Role>();
-//        set.add(role);
 
         var user = saveUser(userInput, role);
         return ResponseEntity.ok(user);
@@ -41,24 +40,15 @@ public class UserController {
         role.setName("ROLE_ADMIN");
 
         var user = saveUser(inputUser, role);
-
         return ResponseEntity.ok(user);
     }
 
-    public User saveUser(User userInput, Role roles) throws RegistrationException {
-
+    public User saveUser(User userInput, Role role) throws RegistrationException {
         checkValidation(userInput);
+        userInput.setRole(role);
+        userInput.setPassword(passwordEncoder.encode(userInput.getPassword()));
 
-        var user = new User();
-        user.setUsername(userInput.getUsername());
-        user.setName(userInput.getName());
-        user.setSurname(userInput.getSurname());
-        user.setPassword(userInput.getPassword());
-        user.setDescription(userInput.getDescription());
-        user.setPhoneNumber(userInput.getPhoneNumber());
-        user.setRole(roles);
-
-        return userService.saveOrUpdate(user);
+        return userService.saveOrUpdate(userInput);
     }
 
 
@@ -68,7 +58,6 @@ public class UserController {
         checkValidation(user);
 
         var bool = !Objects.equals(user.getPassword(), userService.getUserById(user.getId()).getPassword());
-
         return ResponseEntity.ok(userService.update(user, bool));
     }
 
@@ -107,20 +96,65 @@ public class UserController {
         try {
             var list = userService.getAllUsers();
             return ResponseEntity.ok(list);
+
         } catch (Exception e) {
             return ResponseEntity.ok(new ArrayList<>());
         }
     }
 
-    private Boolean checkPasswordLength(String password) {
-        return password.length() >= 4;
+    @GetMapping("/phone_number")
+    public ResponseEntity<User> getUserByPhoneNumber(@RequestParam(name = "phoneNumber") String phoneNumber) throws NotFoundException {
+        if (userService.doesUserExistByPhoneNumber(phoneNumber))
+            return ResponseEntity.ok(userService.getUserByPhoneNumber(phoneNumber));
+        else
+            throw new NotFoundException("This user does not exist!");
     }
 
-    private boolean checkWhereSingleWord(String s) {
-        if (s == null || s.isEmpty())
-            return false;
 
-        return s.trim().contains(" ");
+    @GetMapping("/chat_id")
+    public ResponseEntity<User> getUserByChatId(@RequestParam(name = "chat_id") Long chatId) throws NotFoundException {
+        if (userService.doesUserExistByChatId(chatId))
+            return ResponseEntity.ok(userService.getUserByChatId(chatId));
+        else
+            throw new NotFoundException("This user does not exist!");
+    }
+
+    @GetMapping("/username")
+    public ResponseEntity<User> getUserByUsername(@RequestParam(name = "username") String username) throws NotFoundException {
+        if (userService.doesUserExist(username))
+            return ResponseEntity.ok(userService.getUserByUsername(username));
+        else
+            throw new NotFoundException("This user does not exist!");
+    }
+
+
+    @GetMapping("/checkWithChatId")
+    public ResponseEntity<Boolean> checkUserByChatId(@RequestParam(name = "chatId") Long chatId) throws Exception {
+        try {
+            return ResponseEntity.ok(userService.doesUserExistByChatId(chatId));
+        } catch (Exception e) {
+            throw new Exception("Something wrong with you !");
+        }
+    }
+
+
+    @GetMapping("/checkWithId")
+    public ResponseEntity<Boolean> checkUserById(@RequestParam(name = "id") Long id) throws Exception {
+        try {
+            return ResponseEntity.ok(userService.doesUserExist(id));
+        } catch (Exception e) {
+            throw new Exception("Something wrong with you !");
+        }
+    }
+
+
+    @GetMapping("/checkWithPhoneNumber")
+    public ResponseEntity<Boolean> checkUserByPhoneNumber(@RequestParam(name = "phoneNumber") String phoneNumber) throws Exception {
+        try {
+            return ResponseEntity.ok(userService.doesUserExistByPhoneNumber(phoneNumber));
+        } catch (Exception e) {
+            throw new Exception("Something wrong with you !");
+        }
     }
 
     public void checkValidation(User userInput) throws RegistrationException {
@@ -144,4 +178,16 @@ public class UserController {
         }
 
     }
+
+    private Boolean checkPasswordLength(String password) {
+        return password.length() >= 4;
+    }
+
+    private boolean checkWhereSingleWord(String s) {
+        if (s == null || s.isEmpty())
+            return false;
+
+        return s.trim().contains(" ");
+    }
+
 }
