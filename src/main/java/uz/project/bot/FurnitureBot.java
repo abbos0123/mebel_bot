@@ -69,8 +69,9 @@ public class FurnitureBot extends TelegramLongPollingBot {
                 } else if (text.equals("Buyurtmalar") || text.equals("Заказы") || text.equals("Orders") || text.equals("Буюртмалар")) {
                     list = new ArrayList<>();
                     for (int i = 0; i < 13; i++) {
-                        var order = new Order("" + (i + 1) + ") Order_name", "Description");
-                        list.add(order);
+//                        var order = new Order("" + (i + 1) + ") Order_name", "Description");
+//                        list.add(order);
+                        //Todo(Orders)
                     }
                     BotService.sendOrdersMessage(this, message, list);
 
@@ -127,10 +128,11 @@ public class FurnitureBot extends TelegramLongPollingBot {
                 Order order = new Order();
                 var id = Long.valueOf(data.substring(6));
                 for (Order order1 : list) {
-                    if (Objects.equals(order1.getId(), id)) {
-                        order = order1;
-                        break;
-                    }
+//                    if (Objects.equals(order1.getId(), id)) {
+//                        order = order1;
+//                        break;
+//                    }
+                    //TODO(ORDERS)
                 }
 
                 BotService.sendMessage(this, message, order.toString());

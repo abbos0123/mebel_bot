@@ -155,8 +155,10 @@ public class BotService {
         sendMessage.setChatId(message.getChatId().toString());
 
         for (Order order : list) {
-            var text = order.getName() + "\n" + order.getDesc() + "\n\n";
-            stringBuilder.append(text);
+            //      var text = order.getName() + "\n" + order.getDesc() + "\n\n";
+            stringBuilder.append("text");
+            //TODO(ORDERING SOMETHING)
+
         }
 
         var msgText = stringBuilder.toString();
