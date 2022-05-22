@@ -79,4 +79,29 @@ public class BotController {
 
         return list;
     }
+
+
+    public User getUserByChatId(Long chatId) {
+        var user = userService.getUserByChatId(chatId);
+
+        if (user == null)
+            return new User();
+
+        return user;
+    }
+
+    public boolean doesUserExistByChatId(Long chatId) {
+        try {
+            return userService.doesUserExistByChatId(chatId);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public User saveUser(User user) {
+        if (user == null)
+            return new User();
+
+        return userService.saveOrUpdate(user);
+    }
 }

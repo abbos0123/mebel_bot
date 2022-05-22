@@ -96,6 +96,7 @@ public class BotService {
             case "Uzbek": {
                 BotService.sendMessage(furnitureBot, message, "Siz Uzbek tilini tanladingiz :-)");
                 BotService.sendMessageForSharingContact(furnitureBot, message, "Iltimos kontaktingizni yuboring...", Language.UZBEK);
+           furnitureBot.getUser().setLanguage(Language.UZBEK);
             }
             break;
 
@@ -103,6 +104,7 @@ public class BotService {
                 BotService.sendMessage(furnitureBot, message, "\n\nYou have chosen English :-)\n\n");
                 BotService.sendMessageForSharingContact(furnitureBot, message, "Please send us your contact...", Language.ENGLISH);
                 System.out.println("LAN: " + Language.ENGLISH);
+                furnitureBot.getUser().setLanguage(Language.ENGLISH);
             }
             break;
 
@@ -110,6 +112,8 @@ public class BotService {
                 BotService.sendMessage(furnitureBot, message, "Вы выбрали русский :-)");
                 BotService.sendMessageForSharingContact(furnitureBot, message, "пожалуйста, пришлите свой контакт...", Language.RUSSIAN);
                 System.out.println("LAN: " + Language.RUSSIAN);
+                furnitureBot.getUser().setLanguage(Language.RUSSIAN);
+
             }
             break;
 
@@ -117,6 +121,7 @@ public class BotService {
                 BotService.sendMessage(furnitureBot, message, "Сиз Узбек тилини танладингиз :-)");
                 sendMessageForSharingContact(furnitureBot, message, "Илтимос контактингизни юборинг...", Language.KRILL);
                 System.out.println("LAN: " + Language.KRILL);
+                furnitureBot.getUser().setLanguage(Language.KRILL);
             }
             break;
 
@@ -500,4 +505,24 @@ public class BotService {
         }
     }
 
+    public static boolean checkUserOrCreate(FurnitureBot furnitureBot, User user, Message message) {
+        var botController = furnitureBot.getBotController();
+        var value = botController.doesUserExistByChatId(message.getChatId());
+        if (value) {
+            var user2 = botController.getUserByChatId(message.getChatId());
+            if (user2.getName().equals(user.getName()) && user2.getSurname().equals(user.getSurname())) {
+                furnitureBot.setUser(user2);
+                return true;
+
+            } else {
+                return false;
+            }
+
+        } else {
+            user.setLanguage(furnitureBot.getLanguage());
+            furnitureBot.setUser(botController.saveUser(user));
+            return true;
+        }
+
+    }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "orders")
@@ -18,8 +19,8 @@ public class Order {
     private String name;
 
     @OneToMany
-    @Column(name = "products")
-    private List<Product> productsId;
+    @JoinColumn(name = "products")
+    private List<Product> products;
 
     @Column(name = "user_id")
     private Long userId;
@@ -51,7 +52,7 @@ public class Order {
 
     public Order(String name, List<Product> productsId, Long userId, LocalDate date, Location location, FileStorage locationImage, OrderType orderType, LocalDate deadline) {
         this.name = name;
-        this.productsId = productsId;
+        this.products = productsId;
         this.userId = userId;
         this.date = date;
         this.location = location;
@@ -76,12 +77,12 @@ public class Order {
         this.name = name;
     }
 
-    public List<Product> getProductsId() {
-        return productsId;
+    public List<Product> getProducts() {
+        return products;
     }
 
-    public void setProductsId(List<Product> productsId) {
-        this.productsId = productsId;
+    public void setProducts(List<Product> productsId) {
+        this.products = productsId;
     }
 
     public Long getUserId() {
@@ -145,7 +146,7 @@ public class Order {
         return "Order{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", productsId=" + productsId +
+                ", productsId=" + products +
                 ", userId=" + userId +
                 ", date=" + date +
                 ", location=" + location +

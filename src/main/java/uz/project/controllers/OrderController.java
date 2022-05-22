@@ -5,11 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.project.models.CustomResponse;
 import uz.project.models.Order;
-import uz.project.models.Product;
-import uz.project.models.ProductCategory;
 import uz.project.services.OrderService;
-import uz.project.services.ProductService;
-import uz.project.services.SpecialCategoryService;
 
 import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
@@ -39,7 +35,7 @@ public class OrderController {
                 || order.getName().equals("")
                 || order.getTotalPrice() == 0D
                 || order.getLocation() == null
-                || order.getProductsId() == null
+                || order.getProducts() == null
                 || order.getUserId() == null)
 
             throw new Exception("Please fill all fields!");

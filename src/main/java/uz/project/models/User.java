@@ -1,7 +1,10 @@
 package uz.project.models;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -47,6 +50,10 @@ public class User {
     @Column(name = "salary")
     private Double salary;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "language")
+    private Language language;
+
     @OneToOne
     @JoinColumn(name = "passport_image")
     private FileStorage passwordScannerImage;
@@ -60,30 +67,31 @@ public class User {
     private FileStorage passwordAndOwnerImage;
 
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_orders",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Order> orders;
 
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_basket_products",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private List<Product> basketProducts;
+    private Set<Product> basketProducts;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinTable(name = "user_roles",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Role role;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "card")
     private Card card;
     public User() {
+        this.id = -1L;
     }
 
     public Long getId() {
@@ -238,14 +246,41 @@ public class User {
         this.card = card;
     }
 
-    public List<Product> getBasketProducts() {
+    public Set<Product> getBasketProducts() {
         return basketProducts;
     }
 
-    public void setBasketProducts(List<Product> basketProducts) {
+    public void setBasketProducts(Set<Product> basketProducts) {
         this.basketProducts = basketProducts;
     }
 
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
+    public boolean addOrder(Order order){
+        if (order == null )
+            return false;
+
+        if (orders == null || orders.isEmpty())
+            orders = new ArrayList<>();
+
+        return orders.add(order);
+    }
+
+    public boolean addProductToBasket(Product product){
+        if (product == null )
+            return false;
+
+        if (basketProducts == null || basketProducts.isEmpty())
+            basketProducts = new HashSet<>();
+
+        return basketProducts.add(product);
+    }
     @Override
     public String toString() {
         return "User{" +
@@ -262,6 +297,7 @@ public class User {
                 ", workPlace='" + workPlace + '\'' +
                 ", position='" + position + '\'' +
                 ", salary=" + salary +
+                ", language=" + language +
                 ", passwordScannerImage=" + passwordScannerImage +
                 ", passwordScannerImageBack=" + passwordScannerImageBack +
                 ", passwordAndOwnerImage=" + passwordAndOwnerImage +

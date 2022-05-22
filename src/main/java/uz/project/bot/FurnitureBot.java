@@ -21,12 +21,12 @@ import java.util.Objects;
 public class FurnitureBot extends TelegramLongPollingBot {
     private Language language = Language.UZBEK;
     private Long currentChatId = -1L;
-
     private List<Order> list = new ArrayList<>();
     private List<Product> list2 = new ArrayList<>();
     private boolean isName = false;
     private boolean isSurname = false;
 
+    private User user;
 
     @Autowired
     private BotController botController;
@@ -53,17 +53,36 @@ public class FurnitureBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
 
         if (update.hasMessage()) {
+
             Message message = update.getMessage();
             this.currentChatId = message.getChatId();
+
+            if (user == null) {
+                user = botController.getUserByChatId(currentChatId);
+                user.setChatId(currentChatId);
+
+            } else if (!Objects.equals(user.getChatId(), currentChatId)) {
+                user = botController.getUserByChatId(currentChatId);
+                user.setChatId(currentChatId);
+            }
+
+            if (user.getId() != -1L && user.getLanguage() != null )
+                language = user.getLanguage();
 
             if (message.hasText()) {
                 String text = message.getText();
 
                 if (text.equals("/start")) {
                     BotService.startBot(this, message);
-                    System.out.println();
+                    user = botController.getUserByChatId(currentChatId);
+                    isName = false;
+                    isSurname = false;
+                    language = Language.UZBEK;
 
-                } else if (text.equals("Kategory") || text.equals("Категория") || text.equals("Category") || text.equals("Категорйa")) {
+                } else if (text.equals("user")){
+                    BotService.sendMessage(this, message, user.toString());
+
+                }else if (text.equals("Kategory") || text.equals("Категория") || text.equals("Category") || text.equals("Категорйa")) {
                     BotService.sendMessageForCategories(this, message, language);
 
                 } else if (text.equals("Buyurtmalar") || text.equals("Заказы") || text.equals("Orders") || text.equals("Буюртмалар")) {
@@ -92,22 +111,43 @@ public class FurnitureBot extends TelegramLongPollingBot {
 
 
                 } else if (isName) {
-
                     BotService.sendMessage(this, message, message.getText());
-                    isName = false;
-                    BotService.askUsersSurname(this, language, message);
+                    var name = message.getText();
+                    if (name.length() > 4) {
+                        isName = false;
+
+                        if (user.getId() == -1)
+                        user.setName(message.getText());
+
+                        BotService.askUsersSurname(this, language, message);
+                    } else {
+                        BotService.askUsersName(this, language, message);
+                    }
 
                 } else if (isSurname) {
-
                     BotService.sendMessage(this, message, message.getText());
-                    isSurname = false;
-                    BotService.sendMessage(this, message, "Siz mumfaqqiyatli o'tdingiz...");
-                    BotService.sendMessageForMainMenu(this, message, "", language);
+                    if (message.getText().length() > 4) {
+                        isSurname = false;
 
+                        if (user.getId() == -1)
+                            user.setSurname(message.getText());
+
+                       var value =  BotService.checkUserOrCreate(this, user, message);
+
+                       if (value)
+                        BotService.sendMessageForMainMenu(this, message, "", language);
+                       else
+                        BotService.sendMessage(this, message, "Not Allowed !");
+
+                    } else {
+                        BotService.askUsersSurname(this, language, message);
+                    }
                 }
 
             } else if (message.hasContact()) {
                 var contact = message.getContact();
+                user.setPhoneNumber(contact.getPhoneNumber());
+
                 BotService.sendMessage(this, message, contact.toString());
                 BotService.askUsersName(this, language, message);
 
@@ -122,6 +162,7 @@ public class FurnitureBot extends TelegramLongPollingBot {
 
                 BotService.setLanguage(this, data);
                 BotService.showChosenLanguage(this, message, data);
+
 
             } else if (data.startsWith("order_")) {
 
@@ -190,7 +231,7 @@ public class FurnitureBot extends TelegramLongPollingBot {
                 //Todo(add_basket)
 
             } else if (data.equals("share_contact")) {
-                BotService.sendMessage(this, message, "Contact.....");
+                BotService.sendMessage(this, message, "Contact...");
             }
 
         }
@@ -223,6 +264,38 @@ public class FurnitureBot extends TelegramLongPollingBot {
 
     public void setSurname(boolean surname) {
         isSurname = surname;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public BotController getBotController() {
+        return botController;
+    }
+
+    public void setBotController(BotController botController) {
+        this.botController = botController;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public void setCurrentChatId(Long currentChatId) {
