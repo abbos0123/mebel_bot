@@ -41,11 +41,21 @@ public class BotController {
     }
 
     public Product getProductWithID(Long id) {
-        return productService.getProductById(id);
+        if (productService.doesExistProduct(id))
+            return productService.getProductById(id);
+        else
+            return null;
     }
 
     public User getUserWithId(Long id) {
         return userService.getUserById(id);
+    }
+
+    public SpecialCategory getSpecialCategoryWithID(Long id) {
+        if (!specialCategoryService.doesSpecialCategoryExist(id))
+            return null;
+
+        return specialCategoryService.getSpecialCategoryByID(id);
     }
 
     public List<SpecialCategory> getAllSubCategories(String furniture) {
@@ -56,5 +66,17 @@ public class BotController {
             return new ArrayList<>();
 
         return subCategories;
+    }
+
+
+    public List<Product> getAllProductsOfSubcategory(SpecialCategory specialCategory) {
+        if (specialCategory == null)
+            return new ArrayList<>();
+        var list = productService.getAllProductsOfSpecialCategories(specialCategory);
+
+        if (list == null)
+            return new ArrayList<>();
+
+        return list;
     }
 }

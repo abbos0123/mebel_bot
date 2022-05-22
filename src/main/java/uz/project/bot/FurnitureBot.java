@@ -5,12 +5,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.CallbackQuery;
-import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.objects.*;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import uz.project.controllers.BotController;
 import uz.project.models.*;
+import uz.project.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +26,7 @@ public class FurnitureBot extends TelegramLongPollingBot {
     private List<Product> list2 = new ArrayList<>();
     private boolean isName = false;
     private boolean isSurname = false;
+
 
     @Autowired
     private BotController botController;
@@ -146,17 +147,52 @@ public class FurnitureBot extends TelegramLongPollingBot {
                 }
                 BotService.sendMessage(this, message, product.toString());
 
+            } else if (data.startsWith("simple_product_")) {
+                var productId = Long.valueOf(data.substring(15));
+                var product = botController.getProductWithID(productId);
+
+                if (product != null) {
+                    BotService.sendMessageForProductDescription(this, message, product, language);
+                }
+
             } else if (data.equals("FURNITURE") || data.equals("HOME_APPLIANCE") || data.equals("TELEPHONE_AND_ACCESSORY") || data.equals("LAPTOPS_AND_DESKTOPS") || data.equals("CARPETS") || data.equals("AUDIO_APPLIANCE") || data.equals("SPORTS_EQUIPMENTS") || data.equals("GIFTS_AND_SOUVENIRS") || data.equals("KITCHEN_APPLIANCE")) {
                 List<SpecialCategory> categories = botController.getAllSubCategories(data);
                 BotService.sendMessageForSubCategories(this, message, categories);
-            }
 
+            } else if (data.startsWith("special_product_")) {
+                var id = Long.valueOf(data.substring(16));
+                var spCategory = botController.getSpecialCategoryWithID(id);
 
-            if (data.equals("share_contact")) {
+                if (spCategory != null) {
+                    var list = botController.getAllProductsOfSubcategory(spCategory);
+
+                    if (list.size() != 0) {
+                        BotService.sendProductsListMessage(this, message, list);
+                    } else {
+                        BotService.sendMessageForEmptyProductList(this, message, language);
+                    }
+                }
+
+            } else if (data.startsWith("periodic_payment_")) {
+                var productId = Long.valueOf(data.substring(17));
+                //Todo(payment)
+                var product = botController.getProductWithID(productId);
+                BotService.sendMessageForProductTermPayment(this, message, product, language);
+
+            } else if (data.startsWith("ordering_product_")) {
+                var productId = Long.valueOf(data.substring(17));
+                //Todo(ordering)
+
+            } else if (data.startsWith("add_basket_")) {
+                var productId = Long.valueOf(data.substring(11));
+                //Todo(add_basket)
+
+            } else if (data.equals("share_contact")) {
                 BotService.sendMessage(this, message, "Contact.....");
             }
 
         }
+
     }
 
     public Language getLanguage() {
@@ -202,4 +238,12 @@ public class FurnitureBot extends TelegramLongPollingBot {
     }
 
 
+    public void sendMessagePhoto(Message message, SendPhoto sendMessage) {
+        try {
+            execute(sendMessage);
+            System.out.println(message.getChatId().toString());
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

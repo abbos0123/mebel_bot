@@ -3,14 +3,12 @@ package uz.project.bot;
 
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import uz.project.models.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,217 +16,8 @@ public class BotService {
 
     private static StringBuilder stringBuilder = new StringBuilder();
 
-
     public static void startBot(FurnitureBot furnitureBot, Message message) {
         BotService.sendMessageForLanguage(furnitureBot, message, " Uzbek    ->   Iltimos tilni tanlang" + "\nРусский  ->  Пожалуйста, выберите язык " + "\nEnglish ->  Please choose Language " + "\nКрилл    ->  Илтимос тилни танланг");
-    }
-
-    public static void setMainManuKeyboard(SendMessage sendMessage, Language language) {
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup = new ReplyKeyboardMarkup();
-
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setSelective(true);
-
-        List<KeyboardRow> keyboardRows = new ArrayList<>();
-
-        KeyboardRow keyboardRow1 = new KeyboardRow();
-        KeyboardRow keyboardRow2 = new KeyboardRow();
-        KeyboardRow keyboardRow3 = new KeyboardRow();
-
-        KeyboardButton keyboardButton1 = new KeyboardButton();
-        KeyboardButton keyboardButton2 = new KeyboardButton();
-        KeyboardButton keyboardButton3 = new KeyboardButton();
-        KeyboardButton keyboardButton4 = new KeyboardButton();
-        KeyboardButton keyboardButton5 = new KeyboardButton();
-
-        switch (language.toString()) {
-            case "UZBEK": {
-                keyboardButton1.setText("Kategory");
-                keyboardButton2.setText("Buyurtmalar");
-                keyboardButton3.setText("Savatcha");
-                keyboardButton4.setText("Profil");
-                keyboardButton5.setText("Orqaga");
-            }
-            break;
-            case "RUSSIAN": {
-                keyboardButton1.setText("Категория");
-                keyboardButton2.setText("Заказы");
-                keyboardButton3.setText("Корзина");
-                keyboardButton4.setText("Профиль");
-                keyboardButton5.setText("Назад");
-            }
-            break;
-            case "ENGLISH": {
-                keyboardButton1.setText("Category");
-                keyboardButton2.setText("Orders");
-                keyboardButton3.setText("Basket");
-                keyboardButton4.setText("Profile");
-                keyboardButton5.setText("Back");
-            }
-            break;
-            case "KRILL": {
-                keyboardButton1.setText("Категорйa");
-                keyboardButton2.setText("Буюртмалар");
-                keyboardButton3.setText("Савадча");
-                keyboardButton4.setText("Профил");
-                keyboardButton5.setText("Орқага");
-            }
-            break;
-        }
-        keyboardRow1.add(keyboardButton1);
-        keyboardRow1.add(keyboardButton3);
-        keyboardRow2.add(keyboardButton2);
-        keyboardRow2.add(keyboardButton4);
-        keyboardRow3.add(keyboardButton5);
-
-        keyboardRows.add(keyboardRow1);
-        keyboardRows.add(keyboardRow2);
-        keyboardRows.add(keyboardRow3);
-
-        replyKeyboardMarkup.setKeyboard(keyboardRows);
-
-        sendMessage.setReplyMarkup(replyKeyboardMarkup);
-    }
-
-    private static void setShareContactKeyboardButton(SendMessage sendMessage, String text) {
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup = new ReplyKeyboardMarkup();
-
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        replyKeyboardMarkup.setSelective(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(true);
-
-        List<KeyboardRow> keyboardRows = new ArrayList<>();
-
-        KeyboardRow keyboardRow1 = new KeyboardRow();
-
-        KeyboardButton keyboardButton = new KeyboardButton();
-        keyboardButton.setText(text);
-        keyboardButton.setRequestContact(true);
-
-        keyboardRow1.add(keyboardButton);
-
-        keyboardRows.add(keyboardRow1);
-        replyKeyboardMarkup.setKeyboard(keyboardRows);
-
-        sendMessage.setReplyMarkup(replyKeyboardMarkup);
-    }
-
-
-    public static void setInlineKeyboardButtonForLanguage(SendMessage sendMessage) {
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-
-        List<List<InlineKeyboardButton>> inlineButtons = new ArrayList<>();
-        List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
-        List<InlineKeyboardButton> inlineKeyboardButtonList2 = new ArrayList<>();
-
-        InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
-        inlineKeyboardButton1.setText("Uzbek");
-        inlineKeyboardButton1.setCallbackData("Uzbek");
-
-        InlineKeyboardButton inlineKeyboardButton2 = new InlineKeyboardButton();
-        inlineKeyboardButton2.setText("Russian");
-        inlineKeyboardButton2.setCallbackData("Russian");
-
-        InlineKeyboardButton inlineKeyboardButton3 = new InlineKeyboardButton();
-        inlineKeyboardButton3.setText("English");
-        inlineKeyboardButton3.setCallbackData("English");
-
-        InlineKeyboardButton inlineKeyboardButton4 = new InlineKeyboardButton();
-        inlineKeyboardButton4.setText("Krill");
-        inlineKeyboardButton4.setCallbackData("Krill");
-
-        inlineKeyboardButtonList.add(inlineKeyboardButton1);
-        inlineKeyboardButtonList.add(inlineKeyboardButton2);
-        inlineKeyboardButtonList2.add(inlineKeyboardButton3);
-        inlineKeyboardButtonList2.add(inlineKeyboardButton4);
-
-        inlineButtons.add(inlineKeyboardButtonList);
-        inlineButtons.add(inlineKeyboardButtonList2);
-
-        inlineKeyboardMarkup.setKeyboard(inlineButtons);
-        sendMessage.setReplyMarkup(inlineKeyboardMarkup);
-    }
-
-
-    public static void setInlineKeyboardButtonForOrders(SendMessage sendMessage, List<Order> list) {
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> inlineButtons = new ArrayList<>();
-        List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
-
-        for (int i = 0; i < list.size(); i++) {
-
-            var button = new InlineKeyboardButton();
-
-            button.setText(Integer.toString(i + 1));
-            button.setCallbackData("order_" + list.get(i).getId());
-
-            inlineKeyboardButtonList.add(button);
-
-            if (Math.floorMod(i, 3) == 2) {
-                inlineButtons.add(inlineKeyboardButtonList);
-                inlineKeyboardButtonList = new ArrayList<>();
-            }
-
-            if (i == list.size() - 1 && Math.floorMod(i, 3) != 2) inlineButtons.add(inlineKeyboardButtonList);
-
-        }
-
-        inlineKeyboardMarkup.setKeyboard(inlineButtons);
-        sendMessage.setReplyMarkup(inlineKeyboardMarkup);
-
-    }
-
-    public static void setInlineKeyboardButtonForBaskets(SendMessage sendMessage, List<Product> list) {
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> inlineButtons = new ArrayList<>();
-        List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
-
-        for (int i = 0; i < list.size(); i++) {
-
-            var button = new InlineKeyboardButton();
-
-            button.setText(Integer.toString(i + 1));
-            button.setCallbackData("basket_product_" + list.get(i).getId());
-
-            inlineKeyboardButtonList.add(button);
-
-            if (Math.floorMod(i, 3) == 2) {
-                inlineButtons.add(inlineKeyboardButtonList);
-                inlineKeyboardButtonList = new ArrayList<>();
-            }
-
-            if (i == list.size() - 1 && Math.floorMod(i, 3) != 2) inlineButtons.add(inlineKeyboardButtonList);
-
-        }
-
-        inlineKeyboardMarkup.setKeyboard(inlineButtons);
-        sendMessage.setReplyMarkup(inlineKeyboardMarkup);
-
-    }
-
-    public static void setInlineKeyboardButtonForSubCategories(SendMessage sendMessage, List<SpecialCategory> list) {
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> inlineButtons = new ArrayList<>();
-        List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
-
-        for (int i = 0; i < list.size(); i++) {
-
-            var button = new InlineKeyboardButton();
-
-            button.setText(list.get(i).getName());
-            button.setCallbackData("special_product_" + list.get(i).getId());
-
-            inlineKeyboardButtonList.add(button);
-            inlineButtons.add(inlineKeyboardButtonList);
-            inlineKeyboardButtonList = new ArrayList<>();
-
-        }
-
-        inlineKeyboardMarkup.setKeyboard(inlineButtons);
-        sendMessage.setReplyMarkup(inlineKeyboardMarkup);
-
     }
 
     public static void sendMessage(FurnitureBot furnitureBot, Message message, String text) {
@@ -246,8 +35,7 @@ public class BotService {
         sendMessage.setParseMode(ParseMode.HTML);
         sendMessage.setChatId(message.getChatId().toString());
 
-        BotService.setInlineKeyboardButtonForLanguage(sendMessage);
-
+        BotKeyboards.setInlineKeyboardButtonForLanguage(sendMessage);
         furnitureBot.sendMessage(message, sendMessage);
     }
 
@@ -282,9 +70,6 @@ public class BotService {
     public static void sendMessageForMainMenu(FurnitureBot furnitureBot, Message message, String text, Language language) {
         SendMessage sendMessage = new SendMessage();
         switch (language.toString()) {
-            case "UZBEK":
-                sendMessage.setText("Asosiy Menyu:");
-                break;
             case "RUSSIAN":
                 sendMessage.setText("Главное меню:");
                 break;
@@ -301,7 +86,7 @@ public class BotService {
         sendMessage.setParseMode(ParseMode.HTML);
         sendMessage.setChatId(message.getChatId().toString());
 
-        BotService.setMainManuKeyboard(sendMessage, language);
+        BotKeyboards.setMainManuKeyboard(sendMessage, language);
 
         furnitureBot.sendMessage(message, sendMessage);
     }
@@ -352,14 +137,10 @@ public class BotService {
         String myText = "Share contact";
 
         if (language.equals(Language.UZBEK)) myText = "Kontaktni ulashish";
-
         else if (language.equals(Language.RUSSIAN)) myText = "Обмен контактами";
-
         else if (language.equals(Language.KRILL)) myText = "Контаcтни улашиш";
 
-
-        BotService.setShareContactKeyboardButton(sendMessage, myText);
-
+        BotKeyboards.setShareContactKeyboardButton(sendMessage, myText);
         furnitureBot.sendMessage(message, sendMessage);
     }
 
@@ -373,37 +154,76 @@ public class BotService {
         sendMessage.setParseMode(ParseMode.HTML);
         sendMessage.setChatId(message.getChatId().toString());
 
-        for (int i = 0; i < list.size(); i++) {
-            var text = list.get(i).getName() + "\n" + list.get(i).getDesc() + "\n\n";
+        for (Order order : list) {
+            var text = order.getName() + "\n" + order.getDesc() + "\n\n";
             stringBuilder.append(text);
         }
 
         var msgText = stringBuilder.toString();
         sendMessage.setText(msgText);
-        BotService.setInlineKeyboardButtonForOrders(sendMessage, list);
-
+        BotKeyboards.setInlineKeyboardButtonForOrders(sendMessage, list);
         furnitureBot.sendMessage(message, sendMessage);
 
     }
 
     public static void sendBasketProductsMessage(FurnitureBot furnitureBot, Message message, List<Product> list) {
         if (list == null || list.isEmpty()) list = new ArrayList<>();
+        stringBuilder = new StringBuilder();
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setParseMode(ParseMode.HTML);
+        sendMessage.setChatId(message.getChatId().toString());
 
+        for (Product product : list) {
+            var text = product.getName() + "\n\n";
+            stringBuilder.append(text);
+        }
+
+        var msgText = stringBuilder.toString();
+        sendMessage.setText(msgText);
+        BotKeyboards.setInlineKeyboardButtonForBaskets(sendMessage, list, true);
+
+        furnitureBot.sendMessage(message, sendMessage);
+
+    }
+
+    public static void sendProductsListMessage(FurnitureBot furnitureBot, Message message, List<Product> list) {
+        stringBuilder = new StringBuilder();
         SendMessage sendMessage = new SendMessage();
         sendMessage.setParseMode(ParseMode.HTML);
         sendMessage.setChatId(message.getChatId().toString());
 
         for (int i = 0; i < list.size(); i++) {
             var text = list.get(i).getName() + "\n\n";
-            stringBuilder.append(text);
+            stringBuilder.append(i + 1).append(") ").append(text);
         }
 
         var msgText = stringBuilder.toString();
         sendMessage.setText(msgText);
-        BotService.setInlineKeyboardButtonForBaskets(sendMessage, list);
+        BotKeyboards.setInlineKeyboardButtonForBaskets(sendMessage, list, false);
 
         furnitureBot.sendMessage(message, sendMessage);
 
+    }
+
+    public static void sendMessageForEmptyProductList(FurnitureBot furnitureBot, Message message, Language language) {
+        switch (language.toString()) {
+            case "UZBEK": {
+                BotService.sendMessage(furnitureBot, message, "Afsuskiy mahsulot mavjud emas :-(");
+            }
+            break;
+            case "RUSSIAN": {
+                BotService.sendMessage(furnitureBot, message, "К сожалению, товар недоступен :-(");
+            }
+            break;
+            case "ENGLISH": {
+                BotService.sendMessage(furnitureBot, message, "Unfortunately the product is not available :-(");
+            }
+            break;
+            case "KRILL": {
+                BotService.sendMessage(furnitureBot, message, "Aфсуский маҳсулот мавжуд емас :-(");
+            }
+            break;
+        }
     }
 
     public static void sendMessageForSubCategories(FurnitureBot furnitureBot, Message message, List<SpecialCategory> categories) {
@@ -428,7 +248,7 @@ public class BotService {
                 }
                 break;
             }
-        }else {
+        } else {
             switch (furnitureBot.getLanguage().toString()) {
 
                 case "UZBEK": {
@@ -452,8 +272,7 @@ public class BotService {
         }
 
         sendMessage.setText(msgText);
-        BotService.setInlineKeyboardButtonForSubCategories(sendMessage, categories);
-
+        BotKeyboards.setInlineKeyboardButtonForSubCategories(sendMessage, categories);
         furnitureBot.sendMessage(message, sendMessage);
     }
 
@@ -471,31 +290,19 @@ public class BotService {
 
         switch (language.toString()) {
             case "UZBEK": {
-                stringBuilder.append(
-                        "\nSizning shaxsiy ma'lumotlaringiz: \n\n\tIsm: " + user.getName() +
-                                "\n\tFamiliya : " + user.getSurname() +
-                                "\n\tTel : " + user.getPhoneNumber());
+                stringBuilder.append("\nSizning shaxsiy ma'lumotlaringiz: \n\n\tIsm: ").append(user.getName()).append("\n\tFamiliya : ").append(user.getSurname()).append("\n\tTel : ").append(user.getPhoneNumber());
             }
             break;
             case "RUSSIAN": {
-                stringBuilder.append(
-                        "\nВаша личная информация: \n\n\tIsm: " + user.getName() +
-                                "\n\tФамилия : " + user.getSurname() +
-                                "\n\tТел : " + user.getPhoneNumber());
+                stringBuilder.append("\nВаша личная информация: \n\n\tIsm: ").append(user.getName()).append("\n\tФамилия : ").append(user.getSurname()).append("\n\tТел : ").append(user.getPhoneNumber());
             }
             break;
             case "ENGLISH": {
-                stringBuilder.append(
-                        "\nYour personal information: \n\n\tName: " + user.getName() +
-                                "\n\tSurname : " + user.getSurname() +
-                                "\n\tTel : " + user.getPhoneNumber());
+                stringBuilder.append("\nYour personal information: \n\n\tName: ").append(user.getName()).append("\n\tSurname : ").append(user.getSurname()).append("\n\tTel : ").append(user.getPhoneNumber());
             }
             break;
             case "KRILL": {
-                stringBuilder.append(
-                        "\nСизнинг шахсий маълумотларингиз: \n\n\tИсм: " + user.getName() +
-                                "\n\tФамилия : " + user.getSurname() +
-                                "\n\tТел : " + user.getPhoneNumber());
+                stringBuilder.append("\nСизнинг шахсий маълумотларингиз: \n\n\tИсм: ").append(user.getName()).append("\n\tФамилия : ").append(user.getSurname()).append("\n\tТел : ").append(user.getPhoneNumber());
             }
             break;
         }
@@ -506,19 +313,127 @@ public class BotService {
 
     }
 
+    public static void sendMessageForProductDescription(FurnitureBot furnitureBot, Message message, Product product, Language language) {
+        SendPhoto sendMessage = new SendPhoto();
+        sendMessage.setParseMode(ParseMode.HTML);
+        sendMessage.setChatId(String.valueOf(message.getChatId()));
+        stringBuilder = new StringBuilder();
+
+        switch (language.toString()) {
+            case "UZBEK": {
+                stringBuilder.append("\nMAXSULOT:\n");
+                stringBuilder.append("\nNOMI: ").append(product.getName());
+                stringBuilder.append("\n\nNARXI: ").append(product.getPrice());
+                stringBuilder.append("\n\nMA'LUMOT: ").append(product.getDescription());
+            }
+
+            break;
+            case "ENGLISH": {
+                stringBuilder.append("\nPRODUCT:\n");
+                stringBuilder.append("\nNAME: ").append(product.getName());
+                stringBuilder.append("\n\nPRICE: ").append(product.getPrice());
+                stringBuilder.append("\n\nINFORMATION: ").append(product.getDescription());
+            }
+            break;
+            case "RUSSIAN": {
+                stringBuilder.append("\nПРОДУКТ:\n");
+                stringBuilder.append("\nНАИМЕНОВАНИЕ ТОВАРА: ").append(product.getName());
+                stringBuilder.append("\n\nСТОИМОСТЬ: ").append(product.getPrice());
+                stringBuilder.append("\n\nИНФОРМАЦИЯ: ").append(product.getDescription());
+            }
+            break;
+            case "KRILL": {
+                stringBuilder.append("\nМAХСУЛОТ:\n");
+                stringBuilder.append("\nНОМИ: ").append(product.getName());
+                stringBuilder.append("\n\nНAРХИ: ").append(product.getPrice());
+                stringBuilder.append("\n\nМAъЛУМОТ: ").append(product.getDescription());
+            }
+            break;
+        }
+
+        var txt = stringBuilder.toString();
+        //Todo(Sending message with own photo)
+        sendMessage.setPhoto(new InputFile(new File(String.format("src\\\\main\\\\resources/%s", "upload_files/31bAZL.png")), "file_name"));
+        sendMessage.setProtectContent(false);
+        sendMessage.setCaption(txt);
+
+        BotKeyboards.setInlineKeyboardButtonForProduct(sendMessage, product, language);
+        furnitureBot.sendMessagePhoto(message, sendMessage);
+    }
+
+
+    public static void sendMessageForProductTermPayment(FurnitureBot furnitureBot, Message message, Product product, Language language) {
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setParseMode(ParseMode.HTML);
+        sendMessage.setChatId(String.valueOf(message.getChatId()));
+        stringBuilder = new StringBuilder();
+
+        switch (language.toString()) {
+            case "UZBEK": {
+                stringBuilder.append("\nNOMI: ").append(product.getName());
+                stringBuilder.append("\n\nNARXI: ").append(product.getPrice());
+                stringBuilder.append("\n\n3-OYLIK KREDIT(20%) : Har oyida - > ").append(product.getPrice() * 1.2 / 3);
+                stringBuilder.append("\n\n6-OYLIK KREDIT(30%) : Har oyida - > ").append(product.getPrice() * 1.3 / 6);
+                stringBuilder.append("\n\n9-OYLIK KREDIT(40%) : Har oyida - > ").append(product.getPrice() * 1.4 / 9);
+                stringBuilder.append("\n\n12-OYLIK KREDIT520%) : Har oyida - > ").append(product.getPrice() * 1.5 / 12);
+            }
+            break;
+            case "ENGLISH": {
+                stringBuilder.append("\nNAME: ").append(product.getName());
+                stringBuilder.append("\n\nPROCE: ").append(product.getPrice());
+                stringBuilder.append("\n\n3 MONTH CREDIT(20%) : Each month - > ").append(product.getPrice() * 1.2 / 3);
+                stringBuilder.append("\n\n6-MONTH CREDIT(30%) : Each month - > ").append(product.getPrice() * 1.3 / 6);
+                stringBuilder.append("\n\n9-MONTH CREDIT(40%) : Each month - > ").append(product.getPrice() * 1.4 / 9);
+                stringBuilder.append("\n\n12-MONTH CREDIT(20%) : Each month - > ").append(product.getPrice() * 1.5 / 12);
+            }
+            break;
+            case "RUSSIAN": {
+                stringBuilder.append("\nНАЗВАНИЕ: ").append(product.getName());
+                stringBuilder.append("\n\nСТОИМОСТЬ: ").append(product.getPrice());
+                stringBuilder.append("\n\nКРЕДИТ НА 3 МЕСЯЦА(20%) : Каждый месяц - > ").append(product.getPrice() * 1.2 / 3);
+                stringBuilder.append("\n\nКРЕДИТ НА 6 МЕСЯЦА(30%) : Каждый месяц - > ").append(product.getPrice() * 1.3 / 6);
+                stringBuilder.append("\n\nКРЕДИТ НА 9 МЕСЯЦА(40%) : Каждый месяц - > ").append(product.getPrice() * 1.4 / 9);
+                stringBuilder.append("\n\nКРЕДИТ НА 12 МЕСЯЦА(20%) : Каждый месяц - > ").append(product.getPrice() * 1.5 / 12);
+            }
+            break;
+            case "KRILL": {
+                stringBuilder.append("\nНОМИ: ").append(product.getName());
+                stringBuilder.append("\n\nНAРХИ: ").append(product.getPrice());
+                stringBuilder.append("\n\n3-ОЙЛИК КРЕДИТ(20%) : Ҳар ойида - > ").append(product.getPrice() * 1.2 / 3);
+                stringBuilder.append("\n\n6-ОЙЛИК КРЕДИТ(30%) : Ҳар ойида - > ").append(product.getPrice() * 1.3 / 6);
+                stringBuilder.append("\n\n9-ОЙЛИК КРЕДИТ(40%) : Ҳар ойида - > ").append(product.getPrice() * 1.4 / 9);
+                stringBuilder.append("\n\n12-ОЙЛИК КРЕДИТ(50%) : Ҳар ойида - > ").append(product.getPrice() * 1.5 / 12);
+            }
+            break;
+        }
+
+        var txt = stringBuilder.toString();
+        sendMessage.setProtectContent(false);
+        sendMessage.setText(txt);
+
+        BotKeyboards.setInlineKeyboardButtonForCredit(sendMessage, product, language);
+        furnitureBot.sendMessage(message, sendMessage);
+
+    }
+
 
     public static void setLanguage(FurnitureBot furnitureBot, String language) {
-        if (language.equals("Uzbek")) {
-            furnitureBot.setLanguage(Language.UZBEK);
+        switch (language) {
+            case "Uzbek":
+                furnitureBot.setLanguage(Language.UZBEK);
 
-        } else if (language.equals("Russian")) {
-            furnitureBot.setLanguage(Language.RUSSIAN);
+                break;
+            case "Russian":
+                furnitureBot.setLanguage(Language.RUSSIAN);
 
-        } else if (language.equals("English")) {
-            furnitureBot.setLanguage(Language.ENGLISH);
+                break;
+            case "English":
+                furnitureBot.setLanguage(Language.ENGLISH);
 
-        } else if (language.equals("Krill")) {
-            furnitureBot.setLanguage(Language.KRILL);
+                break;
+            case "Krill":
+                furnitureBot.setLanguage(Language.KRILL);
+                break;
         }
 
         System.out.println(furnitureBot.getCurrentChatId() + " --> " + furnitureBot.getLanguage());
@@ -582,6 +497,5 @@ public class BotService {
                 break;
         }
     }
-
 
 }
