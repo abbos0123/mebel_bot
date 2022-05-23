@@ -80,6 +80,7 @@ public class FurnitureBot extends TelegramLongPollingBot {
                 } else if (text.equals("Savatcha") || text.equals("Корзина") || text.equals("Basket") || text.equals("Савадча")) {
                     Set<Product> products;
                     products = user.getBasketProducts();
+
                     if (products != null && !products.isEmpty()) {
                         var list = new ArrayList<>(products);
                         BotService.sendBasketProductsMessage(this, message, user, language, list);
@@ -92,7 +93,6 @@ public class FurnitureBot extends TelegramLongPollingBot {
 
                 } else if (text.equals("Orqaga") || text.equals("Назад") || text.equals("Back") || text.equals("Орқага")) {
                     BotService.sendMessageForSharingContact(this, message, "Orqaga", language);
-
 
                 } else if (isName) {
                     BotService.sendMessage(this, message, message.getText());
@@ -391,6 +391,7 @@ public class FurnitureBot extends TelegramLongPollingBot {
 
     private void instUser(Message message) {
         this.currentChatId = message.getChatId();
+
         if (user == null) {
             user = botController.getUserByChatId(currentChatId);
             user.setChatId(currentChatId);
