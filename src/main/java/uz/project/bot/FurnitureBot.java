@@ -25,6 +25,8 @@ public class FurnitureBot extends TelegramLongPollingBot {
     private boolean isName = false;
     private boolean isSurname = false;
 
+    private Product product;
+
     private User user;
 
     @Autowired
@@ -72,22 +74,17 @@ public class FurnitureBot extends TelegramLongPollingBot {
                     BotService.sendMessageForCategories(this, message, language);
 
                 } else if (text.equals("Buyurtmalar") || text.equals("Заказы") || text.equals("Orders") || text.equals("Буюртмалар")) {
-                    list = new ArrayList<>();
-                    for (int i = 0; i < 13; i++) {
-                        //Todo(Orders)
-                    }
-                    BotService.sendOrdersMessage(this, message, list);
-
+                    BotService.sendOrdersMessage(this, message);
 
                 } else if (text.equals("Savatcha") || text.equals("Корзина") || text.equals("Basket") || text.equals("Савадча")) {
                     Set<Product> products;
                     products = user.getBasketProducts();
-                   if (products != null && products.isEmpty()){
-                       var list = new ArrayList<>(products);
-                       BotService.sendBasketProductsMessage(this, message, user, language, list);
-                   }else {
-                       BotService.sendMessageForEmptyProductList(this, message, language);
-                   }
+                    if (products != null && !products.isEmpty()) {
+                        var list = new ArrayList<>(products);
+                        BotService.sendBasketProductsMessage(this, message, user, language, list);
+                    } else {
+                        BotService.sendMessageForEmptyProductList(this, message, language);
+                    }
 
                 } else if (text.equals("Profil") || text.equals("Профиль") || text.equals("Profile") || text.equals("Профил")) {
                     BotService.sendMessageForProfile(this, message, language, user);
@@ -143,10 +140,8 @@ public class FurnitureBot extends TelegramLongPollingBot {
 
             if (location != null) {
                 BotService.sendMessageForMainMenu(this, message, "", language);
-                BotService.orderProduct(this, message, user, language, location);
+                BotService.orderProduct(this, message, user, language, location, product);
 
-
-                //TODO(Continue)
             }
 
 
@@ -163,24 +158,15 @@ public class FurnitureBot extends TelegramLongPollingBot {
 
 
             } else if (data.startsWith("order_")) {
-
-                Order order = new Order();
                 var id = Long.valueOf(data.substring(6));
-                for (Order order1 : list) {
-//                    if (Objects.equals(order1.getId(), id)) {
-//                        order = order1;
-//                        break;
-//                    }
-                    //TODO(ORDERS)
-                }
+                var order = botController.getOrderWithId(id);
 
-                BotService.sendMessage(this, message, order.toString());
+                if (order != null) BotService.sendMessageForOrderDescription(this, message, order);
 
             } else if (data.startsWith("ordering_")) {
-                var userId = Long.valueOf(data.substring(9));
-
-                //Todo(Ordering products from basket)
+                product = null;
                 BotService.shareLocation(this, message, language);
+
             } else if (data.startsWith("basket_product_")) {
                 var id = Long.valueOf(data.substring(15));
                 var product = botController.getProductWithID(id);
@@ -237,9 +223,13 @@ public class FurnitureBot extends TelegramLongPollingBot {
                 var product = botController.getProductWithID(productId);
                 BotService.sendMessageForProductTermPayment(this, message, product, language);
 
-            } else if (data.startsWith("ordering_product_")) {
-                var productId = Long.valueOf(data.substring(17));
-                //Todo(ordering)
+            } else if (data.startsWith("orderingProduct_")) {
+                product = null;
+                var productId = Long.valueOf(data.substring(16));
+                product = botController.getProductWithID(productId);
+                BotService.shareLocation(this, message, language);
+
+                //Todo(continue)
 
             } else if (data.startsWith("add_basket_")) {
                 var productId = Long.valueOf(data.substring(11));
@@ -329,6 +319,13 @@ public class FurnitureBot extends TelegramLongPollingBot {
         this.currentChatId = currentChatId;
     }
 
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public void sendMessage(Message message, SendMessage sendMessage) {
         try {

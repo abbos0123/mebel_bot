@@ -229,7 +229,7 @@ public class BotKeyboards {
 
         InlineKeyboardButton inlineKeyboardButton2 = new InlineKeyboardButton();
         inlineKeyboardButton2.setText(text2);
-        inlineKeyboardButton2.setCallbackData("ordering_product_" + product.getId());
+        inlineKeyboardButton2.setCallbackData("orderingProduct_" + product.getId());
 
         InlineKeyboardButton inlineKeyboardButton3 = new InlineKeyboardButton();
         inlineKeyboardButton3.setText(text3);

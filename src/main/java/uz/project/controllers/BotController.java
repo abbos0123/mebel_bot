@@ -29,18 +29,20 @@ public class BotController {
         this.locationService = locationService;
     }
 
-    public Student getStudentWithId(Long id) {
-        var student = studentService.getStudent(id);
-
-        return Objects.requireNonNullElseGet(student, Student::new);
-    }
-
-    public Product addProduct(Product product) {
-        if (product == null)
+    public List<Order> getAllOrdersOfUser(Long userId){
+        if (!orderService.doesOrderExistWithUserId(userId))
             return null;
-        return productService.saveProduct(product);
-    }
 
+      return  orderService.getAllOrdersOfUser(userId);
+
+    }
+    public Order getOrderWithId(Long id){
+        if (orderService.doesOrderExist(id)){
+          return   orderService.getOrderById(id);
+        }
+
+        return null;
+    }
     public Product getProductWithID(Long id) {
         if (productService.doesExistProduct(id))
             return productService.getProductById(id);

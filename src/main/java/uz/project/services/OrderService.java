@@ -70,7 +70,7 @@ public class OrderService {
 
     //getting all orders of user
     public List<Order> getAllOrdersOfUser(Long userId) {
-        return orderRepository.findOrdersByUserId(userId);
+        return orderRepository.findOrdersByUserIdOrderByOrderTimeAsc(userId);
     }
 
     //checking existence of order
