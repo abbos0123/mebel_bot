@@ -39,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
 
-                /** these are permissions for user resource**/
+                // these are permissions for user resource
 
                 .antMatchers("/api/user/client/register").permitAll()
                 .antMatchers("/api/user/admin/register").permitAll()
@@ -50,7 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/search").permitAll()
 
 
-                /** these are permissions for  files **/
+                // these are permissions for  files
 
                 .antMatchers("/api/file/upload").permitAll()
                 .antMatchers("/api/file/upload/image").permitAll()
@@ -58,7 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/file/download/*").permitAll()
                 .antMatchers("/api/file/delete/*").permitAll()
 
-                /** permissions for product rest apis*/
+                //permissions for product rest apis
 
                 .antMatchers("/api/product/add_new_product").permitAll()
                 .antMatchers("/api/product/{id}").permitAll()

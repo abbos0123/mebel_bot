@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Optional;
 
 public class SecurityUtils {
+
     public SecurityUtils() {
     }
 

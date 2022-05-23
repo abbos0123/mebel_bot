@@ -9,6 +9,7 @@ import java.util.List;
 
 @Service
 public class SpecialCategoryService {
+
     private final SpecialCategoryRepository specialCategoryRepository;
 
     public SpecialCategoryService(SpecialCategoryRepository specialCategoryRepository) {
@@ -55,16 +56,18 @@ public class SpecialCategoryService {
         return specialCategory.getName() + " is deleted!";
     }
 
+
     public boolean doesSpecialCategoryExist(String name) {
         return specialCategoryRepository.existsSpecialCategoryByName(name);
     }
+
 
     public boolean doesSpecialCategoryExist(Long id) {
         return specialCategoryRepository.existsSpecialCategoryById(id);
     }
 
-    public SpecialCategory update(SpecialCategory specialCategory) {
 
+    public SpecialCategory update(SpecialCategory specialCategory) {
         return specialCategoryRepository.save(specialCategory);
     }
 
@@ -72,16 +75,14 @@ public class SpecialCategoryService {
         if (name == null || name.equals(""))
             return getAllSpecialCategories();
 
-        var categories = specialCategoryRepository.findAllByNameContainingIgnoreCase(name);
-        return categories;
+        return specialCategoryRepository.findAllByNameContainingIgnoreCase(name);
     }
 
     public List<SpecialCategory> getAllSpecialCategoriesByMainCategory(ProductCategory productCategory) {
         if (productCategory == null)
             return getAllSpecialCategories();
 
-        var categories = specialCategoryRepository.findSpecialCategoriesByProductCategory(productCategory);
-        return categories;
+        return   specialCategoryRepository.findSpecialCategoriesByProductCategory(productCategory);
     }
 
 }

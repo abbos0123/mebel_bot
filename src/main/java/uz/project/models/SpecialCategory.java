@@ -10,12 +10,13 @@ public class SpecialCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(name = "product_category")
     @Enumerated(EnumType.STRING)
     private ProductCategory productCategory;
+
     @Column(name = "product_name")
     private String name;
+
     @Column(name = "product_description")
     private String description;
 

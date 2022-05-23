@@ -8,7 +8,9 @@ import java.util.List;
 
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -16,14 +18,17 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+
     public User saveOrUpdate(User user) {
 
         return userRepository.save(user);
     }
 
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
 
     public User getUserById(Long id) {
         if (id == null || id < 0)
@@ -36,6 +41,7 @@ public class UserService {
         return null;
     }
 
+
     public User getUserByChatId(Long chatId) {
         if (chatId == null || chatId < 0)
             return null;
@@ -46,6 +52,7 @@ public class UserService {
 
         return null;
     }
+
 
     public User getUserByUsername(String username) {
         if (username == null || username.isEmpty())
@@ -58,6 +65,7 @@ public class UserService {
         return null;
     }
 
+
     public User getUserByPhoneNumber(String phoneNumber) {
         if (phoneNumber == null || phoneNumber.isEmpty())
             return null;
@@ -69,6 +77,7 @@ public class UserService {
         return null;
     }
 
+
     public String delete(Long id) {
         User user = userRepository.findUserById(id);
         userRepository.delete(user);
@@ -76,21 +85,26 @@ public class UserService {
         return user.getUsername() + " is deleted!";
     }
 
+
     public boolean doesUserExist(String username) {
         return userRepository.existsUserByUsername(username);
     }
+
 
     public boolean doesUserExist(Long id) {
         return userRepository.existsUserById(id);
     }
 
+
     public boolean doesUserExistByChatId(Long id) {
         return userRepository.existsUserByChatId(id);
     }
 
+
     public boolean doesUserExistByPhoneNumber(String phoneNumber) {
         return userRepository.existsUserByPhoneNumber(phoneNumber);
     }
+
 
     public User update(User user, boolean isPasswordChange) {
         if (isPasswordChange)
@@ -103,8 +117,6 @@ public class UserService {
         if (name == null || name.equals(""))
             return getAllUsers();
 
-        var users = userRepository.findAllByUsernameContainingIgnoreCase(name);
-        return users;
+        return userRepository.findAllByUsernameContainingIgnoreCase(name);
     }
-
 }

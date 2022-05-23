@@ -6,22 +6,17 @@ import uz.project.services.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 public class BotController {
-
-    private final StudentService studentService;
     private final ProductService productService;
     private final OrderService orderService;
     private final SpecialCategoryService specialCategoryService;
     private final UserService userService;
-
     private final LocationService locationService;
 
 
-    public BotController(StudentService studentService, ProductService productService, OrderService orderService, SpecialCategoryService specialCategoryService, UserService userService, LocationService locationService) {
-        this.studentService = studentService;
+    public BotController(ProductService productService, OrderService orderService, SpecialCategoryService specialCategoryService, UserService userService, LocationService locationService) {
         this.productService = productService;
         this.orderService = orderService;
         this.specialCategoryService = specialCategoryService;
@@ -29,20 +24,27 @@ public class BotController {
         this.locationService = locationService;
     }
 
-    public List<Order> getAllOrdersOfUser(Long userId){
+    public List<Order> getAllOrdersOfUser(Long userId) {
         if (!orderService.doesOrderExistWithUserId(userId))
             return null;
 
-      return  orderService.getAllOrdersOfUser(userId);
-
+        return orderService.getAllOrdersOfUser(userId);
     }
-    public Order getOrderWithId(Long id){
-        if (orderService.doesOrderExist(id)){
-          return   orderService.getOrderById(id);
+    public Order getOrderWithId(Long id) {
+        if (orderService.doesOrderExist(id)) {
+            return orderService.getOrderById(id);
         }
 
         return null;
     }
+
+    public Order saveOrder(Order order) {
+        if (order == null)
+            return null;
+
+        return orderService.saveOrder(order);
+    }
+
     public Product getProductWithID(Long id) {
         if (productService.doesExistProduct(id))
             return productService.getProductById(id);
@@ -75,14 +77,13 @@ public class BotController {
     public List<Product> getAllProductsOfSubcategory(SpecialCategory specialCategory) {
         if (specialCategory == null)
             return new ArrayList<>();
-        var list = productService.getAllProductsOfSpecialCategories(specialCategory);
 
+        var list = productService.getAllProductsOfSpecialCategories(specialCategory);
         if (list == null)
             return new ArrayList<>();
 
         return list;
     }
-
 
     public User getUserByChatId(Long chatId) {
         var user = userService.getUserByChatId(chatId);
@@ -107,14 +108,8 @@ public class BotController {
 
         return userService.saveOrUpdate(user);
     }
-      public Order saveOrder(Order order) {
-        if (order == null)
-          return null;
 
-        return orderService.saveOrder(order);
-    }
-
-    public Location saveLocation(Location location){
+    public Location saveLocation(Location location) {
         return locationService.saveLocation(location);
     }
 }

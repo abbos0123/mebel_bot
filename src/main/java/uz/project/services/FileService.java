@@ -16,7 +16,6 @@ import java.io.IOException;
 @Service
 public class FileService {
 
-
     @Value("${upload.folder}")
     private String uploadFolder;
 
@@ -28,6 +27,7 @@ public class FileService {
         this.fileStorageRepository = fileStorageRepository;
         this.hashids = new Hashids(getClass().getName(), 6);
     }
+
 
     public FileStorage save(MultipartFile multipartFile) {
         FileStorage fileStorage = new FileStorage();
@@ -45,13 +45,14 @@ public class FileService {
         }
 
         fileStorage.setHashId(hashids.encode(fileStorage.getId()));
-        fileStorage.setUploadPath(String.format("upload_files/%s.%s"
-                , fileStorage.getHashId()
-                , fileStorage.getExtension()));
+        fileStorage.setUploadPath(String.format("upload_files/%s.%s",
+                fileStorage.getHashId(),
+                fileStorage.getExtension()));
 
         fileStorageRepository.save(fileStorage);
         uploadFolder = uploadFolder.getAbsoluteFile();
         File file = new File(uploadFolder, String.format("%s.%s", fileStorage.getHashId(), fileStorage.getExtension()));
+
         try {
             multipartFile.transferTo(file);
             return fileStorage;
@@ -62,14 +63,17 @@ public class FileService {
         return null;
     }
 
+
     @Transactional(readOnly = true)
     public FileStorage findByHashId(String hashID) {
         return fileStorageRepository.findFileStorageByHashId(hashID);
     }
 
+
     public void deleteFile(String hashId) throws Exception {
         var fileStorage = findByHashId(hashId);
         var file = new File(String.format("%s/%s", uploadFolder, fileStorage.getUploadPath()));
+
         if (file.delete()) {
             fileStorageRepository.delete(fileStorage);
         } else {
@@ -77,8 +81,10 @@ public class FileService {
         }
     }
 
+
     private String getExt(String fileName) {
         String ext = null;
+
         if (fileName != null && !fileName.isEmpty()) {
             int dot = fileName.lastIndexOf('.');
             if (dot > 0 && dot <= fileName.length() - 2)
@@ -92,9 +98,11 @@ public class FileService {
         return fileStorageRepository.existsFileStorageByHashId(hashId);
     }
 
+
     @Scheduled(cron = "00 00 00 * * *")
     public void deleteAllDraft() {
         var list = fileStorageRepository.findFileStorageByStorageStatus(FileStorageStatus.ACTIVE);
+
         for (FileStorage fileStorage : list) {
             try {
                 clearMemory(fileStorage);
@@ -104,15 +112,18 @@ public class FileService {
         }
     }
 
+
     public void clearMemory(FileStorage fileStorage) {
         try {
             var path = fileStorage.getUploadPath();
             fileStorageRepository.delete(fileStorage);
             deleteGarbage(path);
+
         } catch (Exception E) {
             System.out.println(E.getMessage());
         }
     }
+
 
     public void deleteGarbage(String path) throws Exception {
         var file = new File(String.format("%s/%s", uploadFolder, path));

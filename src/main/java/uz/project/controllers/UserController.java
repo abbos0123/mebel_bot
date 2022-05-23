@@ -43,6 +43,7 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+
     public User saveUser(User userInput, Role role) throws RegistrationException {
         checkValidation(userInput);
         userInput.setRole(role);
@@ -54,10 +55,9 @@ public class UserController {
 
     @PutMapping("/update")
     public ResponseEntity<?> updateUser(@RequestBody User user) {
-
         checkValidation(user);
-
         var bool = !Objects.equals(user.getPassword(), userService.getUserById(user.getId()).getPassword());
+
         return ResponseEntity.ok(userService.update(user, bool));
     }
 
@@ -81,14 +81,12 @@ public class UserController {
 
     @GetMapping("/search")
     public ResponseEntity<?> getAllUserByName(@RequestParam("name") String name) {
-
         try {
             var list = userService.getAllUsersByName(name);
             return ResponseEntity.ok(list);
         } catch (Exception e) {
             return ResponseEntity.ok(new ArrayList<>());
         }
-
     }
 
     @GetMapping("/all")

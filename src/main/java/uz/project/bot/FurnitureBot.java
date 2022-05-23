@@ -307,10 +307,6 @@ public class FurnitureBot extends TelegramLongPollingBot {
         isName = name;
     }
 
-    public boolean isSurname() {
-        return isSurname;
-    }
-
     public void setSurname(boolean surname) {
         isSurname = surname;
     }
@@ -325,30 +321,6 @@ public class FurnitureBot extends TelegramLongPollingBot {
 
     public BotController getBotController() {
         return botController;
-    }
-
-    public void setBotController(BotController botController) {
-        this.botController = botController;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public void setCurrentChatId(Long currentChatId) {
-        this.currentChatId = currentChatId;
     }
 
     public Product getProduct() {

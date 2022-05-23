@@ -20,7 +20,6 @@ import java.util.InputMismatchException;
 @RestController
 @RequestMapping("/api/file")
 public class FileController {
-
     private final FileService fileService;
 
     @Value("${upload.folder}")
@@ -33,7 +32,6 @@ public class FileController {
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadAnyFile(@RequestParam("file") MultipartFile multipartFile) throws Exception{
-
         if (multipartFile.isEmpty())
             throw new Exception("You dont select any file. Please select one!");
 
@@ -72,7 +70,6 @@ public class FileController {
 
     @GetMapping("/download/{hashId}")
     public ResponseEntity<?> downloadFile( @PathVariable String hashId) throws NotFoundException {
-
         try {
             FileStorage fileStorage = fileService.findByHashId(hashId);
 

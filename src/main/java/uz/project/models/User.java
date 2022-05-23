@@ -69,8 +69,8 @@ public class User {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_orders",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "order_id"))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "order_id"))
     private List<Order> orders;
 
 
@@ -83,13 +83,14 @@ public class User {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id"))
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Role role;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "card")
     private Card card;
+
     public User() {
         this.id = -1L;
     }
@@ -262,8 +263,8 @@ public class User {
         this.language = language;
     }
 
-    public boolean addOrder(Order order){
-        if (order == null )
+    public boolean addOrder(Order order) {
+        if (order == null)
             return false;
 
         if (orders == null || orders.isEmpty())
@@ -272,8 +273,8 @@ public class User {
         return orders.add(order);
     }
 
-    public boolean addProductToBasket(Product product){
-        if (product == null )
+    public boolean addProductToBasket(Product product) {
+        if (product == null)
             return false;
 
         if (basketProducts == null || basketProducts.isEmpty())
@@ -282,8 +283,8 @@ public class User {
         return basketProducts.add(product);
     }
 
-    public boolean removeProductFromBasket(Product product){
-        if (product == null )
+    public boolean removeProductFromBasket(Product product) {
+        if (product == null)
             return false;
 
         if (basketProducts == null || basketProducts.isEmpty())
@@ -291,6 +292,7 @@ public class User {
 
         return basketProducts.remove(product);
     }
+
     @Override
     public String toString() {
         return "User{" +

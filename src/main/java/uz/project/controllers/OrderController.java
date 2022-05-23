@@ -14,15 +14,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/order")
 public class OrderController {
-
     private final OrderService orderService;
-
 
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
 
-    //adding product
+
     @PostMapping("/add_new_order")
     public ResponseEntity<Order> addingNewOrder(@RequestBody Order order) throws Exception {
         checkValidation(order);
@@ -39,10 +37,9 @@ public class OrderController {
                 || order.getUserId() == null)
 
             throw new Exception("Please fill all fields!");
-
     }
 
-    //getting order with id
+
     @GetMapping("/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable Long id) throws NotFoundException {
         var order = orderService.getOrderById(id);
@@ -54,10 +51,8 @@ public class OrderController {
     }
 
 
-    //deleting order
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<CustomResponse> deleteOrder(@PathVariable Long id) throws Exception {
-
         if (id == null)
             throw new Exception("Please dont skip id!");
 
@@ -70,7 +65,6 @@ public class OrderController {
     }
 
 
-    //updating order
     @PutMapping("/update")
     public ResponseEntity<Order> updateOrder(@RequestBody Order order) throws Exception {
         checkValidation(order);
@@ -81,7 +75,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.updateOrder(order));
     }
 
-    //check existence of order with id
+
     @GetMapping("/checking/{id}")
     public ResponseEntity<Boolean> doesOrderExistWithId(@PathVariable Long id) throws Exception {
         if (id == null || id == 0)
@@ -90,10 +84,9 @@ public class OrderController {
         return ResponseEntity.ok(orderService.doesExistOrder(id));
     }
 
-    //getting all orders
+
     @GetMapping("/all")
     public ResponseEntity<List<Order>> findAllOrders() {
-
         try {
             var list = orderService.getAllOrders();
 

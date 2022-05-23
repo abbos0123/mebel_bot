@@ -1,11 +1,8 @@
 package uz.project.models;
 
 public class CustomResponse {
-
     private int status;
-
     private String message;
-
     private Long time;
 
     public CustomResponse() {

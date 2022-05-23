@@ -5,11 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import uz.project.models.*;
 import uz.project.services.SpecialCategoryService;
-import uz.project.utilds.RegistrationException;
 
 import javax.ws.rs.NotFoundException;
 import java.util.ArrayList;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/category")
@@ -20,7 +18,6 @@ public class SpecialCategoryController {
         this.specialCategoryService = specialCategoryService;
     }
 
-
     @PostMapping("/add")
     public ResponseEntity<?> saveCategory(@RequestBody SpecialCategory specialCategory) throws Exception {
         try {
@@ -29,7 +26,6 @@ public class SpecialCategoryController {
         } catch (Exception e) {
             throw new Exception("Something wrong with your insertion !");
         }
-
     }
 
 
@@ -61,7 +57,6 @@ public class SpecialCategoryController {
 
     @GetMapping("/search")
     public ResponseEntity<?> getAllSpecialCategoriesByName(@RequestParam("name") String name) {
-
         try {
             var list = specialCategoryService.getAllSpecialCategoriesByName(name);
             return ResponseEntity.ok(list);
@@ -69,8 +64,8 @@ public class SpecialCategoryController {
         } catch (Exception e) {
             return ResponseEntity.ok(new ArrayList<>());
         }
-
     }
+
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllSpecialCategories() {
@@ -87,9 +82,9 @@ public class SpecialCategoryController {
         try {
             var list = specialCategoryService.getAllSpecialCategoriesByMainCategory(category);
             return ResponseEntity.ok(list);
+
         } catch (Exception e) {
             return ResponseEntity.ok(new ArrayList<>());
         }
     }
-
 }

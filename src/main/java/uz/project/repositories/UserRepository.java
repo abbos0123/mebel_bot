@@ -15,8 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findUserByPhoneNumber(String phoneNumber);
 
     User findUserByChatId(Long chatId);
-
-
+    
     boolean existsUserById(Long id);
 
     boolean existsUserByUsername(String username);
@@ -24,7 +23,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsUserByChatId(Long chatId);
 
     boolean existsUserByPhoneNumber(String  phoneNumber);
-
 
     List<User> findAllByUsernameContainingIgnoreCase(String username);
 }

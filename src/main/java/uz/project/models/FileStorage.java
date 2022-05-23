@@ -9,18 +9,25 @@ public class FileStorage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "extension")
     private String extension;
+
     @Column(name = "file_size")
     private Long fileSize;
+
     @Column(name = "hash_id")
     private String hashId;
+
     @Column(name = "upload_path")
     private String uploadPath;
+
     @Column(name = "content_type")
     private String contentType;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "storage_status")
     private FileStorageStatus storageStatus;
@@ -100,5 +107,19 @@ public class FileStorage {
 
     public void setStorageStatus(FileStorageStatus storageStatus) {
         this.storageStatus = storageStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "FileStorage{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", extension='" + extension + '\'' +
+                ", fileSize=" + fileSize +
+                ", hashId='" + hashId + '\'' +
+                ", uploadPath='" + uploadPath + '\'' +
+                ", contentType='" + contentType + '\'' +
+                ", storageStatus=" + storageStatus +
+                '}';
     }
 }

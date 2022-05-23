@@ -11,7 +11,7 @@ import java.util.List;
 
 public class BotServiceHelper {
     public static void setInlineKeyboardButtonForProductCategories(SendMessage sendMessage, Language language) {
-        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        InlineKeyboardMarkup inlineKeyboardMarkup;
 
         List<List<InlineKeyboardButton>> inlineButtons = new ArrayList<>();
 
