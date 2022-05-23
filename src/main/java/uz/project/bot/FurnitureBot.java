@@ -25,9 +25,7 @@ public class FurnitureBot extends TelegramLongPollingBot {
     private Long currentChatId = -1L;
     private boolean isName = false;
     private boolean isSurname = false;
-
     private Product product;
-
     private User user;
 
     @Autowired
@@ -38,7 +36,6 @@ public class FurnitureBot extends TelegramLongPollingBot {
 
     @Value("${bot.token}")
     private String token;
-
 
     @Override
     public String getBotUsername() {
@@ -52,7 +49,6 @@ public class FurnitureBot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-
         if (update.hasMessage()) {
 
             Message message = update.getMessage();
@@ -166,8 +162,6 @@ public class FurnitureBot extends TelegramLongPollingBot {
                 BotService.orderProduct(this, message, user, language, location, product);
 
             }
-
-
         } else if (update.hasCallbackQuery()) {
             Message message = update.getCallbackQuery().getMessage();
             CallbackQuery callbackQuery = update.getCallbackQuery();
@@ -175,10 +169,8 @@ public class FurnitureBot extends TelegramLongPollingBot {
             instUser(message);
 
             if (data.equals("Uzbek") || data.equals("Russian") || data.equals("English") || data.equals("Krill")) {
-
                 BotService.setLanguage(this, data);
                 BotService.showChosenLanguage(this, message, data);
-
 
             } else if (data.startsWith("order_")) {
                 var id = Long.valueOf(data.substring(6));
@@ -199,20 +191,18 @@ public class FurnitureBot extends TelegramLongPollingBot {
                 var productId = Long.valueOf(data.substring(15));
                 var product = botController.getProductWithID(productId);
 
-                if (product != null) {
+                if (product != null)
                     BotService.sendMessageForProductDescription(this, message, product, user, language, false);
-                }
 
             } else if (data.startsWith("delete_from_basket_")) {
                 var productId = Long.valueOf(data.substring(19));
                 var product = botController.getProductWithID(productId);
+
                 if (product != null) {
                     try {
                         botController.saveUser(user);
                         user = botController.getUserWithId(user.getId());
-
                         BotService.sendMessage(this, message, "Deleted");
-
                     } catch (Exception e) {
                         e.printStackTrace();
                         BotService.sendMessage(this, message, "Deleted");
@@ -251,7 +241,6 @@ public class FurnitureBot extends TelegramLongPollingBot {
                 var productId = Long.valueOf(data.substring(16));
                 product = botController.getProductWithID(productId);
                 BotService.shareLocation(this, message, language);
-
 
             } else if (data.startsWith("add_basket_")) {
                 var productId = Long.valueOf(data.substring(11));
@@ -396,6 +385,7 @@ public class FurnitureBot extends TelegramLongPollingBot {
             user = botController.getUserByChatId(currentChatId);
             user.setChatId(currentChatId);
             messageType = 0;
+
         } else if (!Objects.equals(user.getChatId(), currentChatId)) {
             user = botController.getUserByChatId(currentChatId);
             user.setChatId(currentChatId);
