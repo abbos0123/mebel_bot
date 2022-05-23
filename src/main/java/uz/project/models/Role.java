@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 @Entity
 public class Role implements Serializable {
+
     @Id
     private String name;
 

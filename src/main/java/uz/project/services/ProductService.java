@@ -81,4 +81,5 @@ public class ProductService {
     public List<Product> getAllProductsOfMainCategories(ProductCategory productCategory){
         return productRepository.findAllByProductCategory(productCategory);
     }
+
 }

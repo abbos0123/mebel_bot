@@ -12,6 +12,7 @@ public class SpecialCategoryService {
 
     private final SpecialCategoryRepository specialCategoryRepository;
 
+
     public SpecialCategoryService(SpecialCategoryRepository specialCategoryRepository) {
         this.specialCategoryRepository = specialCategoryRepository;
     }
@@ -21,9 +22,11 @@ public class SpecialCategoryService {
         return specialCategoryRepository.save(specialCategory);
     }
 
+
     public List<SpecialCategory> getAllSpecialCategories() {
         return specialCategoryRepository.findAll();
     }
+
 
     public SpecialCategory getSpecialCategoryByID(Long id) {
         if (id == null || id < 0)
@@ -48,6 +51,7 @@ public class SpecialCategoryService {
         return null;
     }
 
+
     public String delete(Long id) {
         SpecialCategory specialCategory = specialCategoryRepository.findSpecialCategoryById(id);
 
@@ -71,12 +75,14 @@ public class SpecialCategoryService {
         return specialCategoryRepository.save(specialCategory);
     }
 
+
     public List<SpecialCategory> getAllSpecialCategoriesByName(String name) {
         if (name == null || name.equals(""))
             return getAllSpecialCategories();
 
         return specialCategoryRepository.findAllByNameContainingIgnoreCase(name);
     }
+
 
     public List<SpecialCategory> getAllSpecialCategoriesByMainCategory(ProductCategory productCategory) {
         if (productCategory == null)

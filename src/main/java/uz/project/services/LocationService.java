@@ -15,13 +15,16 @@ private final LocationRepository locationRepository;
         this.locationRepository = locationRepository;
     }
 
+
     public Location saveLocation(Location location){
         return locationRepository.save(location);
     }
 
+
     public Location getLocationWithId(Long id){
         return locationRepository.findLocationById(id);
     }
+
 
     public boolean deleteLocation(Location location){
         try {
@@ -31,6 +34,7 @@ private final LocationRepository locationRepository;
            return false;
        }
     }
+
 
     public List<Location> getAllLocations(){
         return locationRepository.findAll();
