@@ -10,8 +10,6 @@ import uz.project.models.*;
 
 import java.io.File;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -707,4 +705,104 @@ public class BotService {
         furnitureBot.sendMessage(message, sendMessage);
     }
 
+    public static void senMessageForPosition(FurnitureBot furnitureBot, Message message, Language language, int position) {
+        var text0 = "Iltimos ishlaydigan tashkiltingizni  kiriting !";
+        var text1 = "Iltimos Lavozimingizni kiriting !";
+        var text2 = "Iltimos ish stajingiz kiriting !";
+        var text3 = "Iltimos maoshingizni kiriting !";
+        var text4 = "Iltimos paspert kopiyasini jo'nating !";
+        var text5 = "Iltimos paspert orqa betining kopiyasini jo'nating !";
+        var text6 = "Iltimos paspert bilan rasimga tushib  jo'nating !";
+        var text7 = "Iltimos  telefon raqamingiz !";
+        var text8 = "Iltimos ikkinchi telefon raqamingiz !";
+        var text9 = "Iltimos plastik kartangizni kiriting!";
+
+        switch (language.toString()) {
+            case "ENGLISH": {
+
+                text0 = "Please enter the organization you work for!";
+                text1 = "Please enter your position !";
+                text2 = "Please enter your work experience!";
+                text3 = "Please enter your salary!";
+                text4 = "Please send a copy of your passport!";
+                text5 = "Please send a copy of the paspert back page!";
+                text6 = "Please take a picture with a passport and send it!";
+                text7 = "Your phone number, please!";
+                text8 = "Your second phone number, please!";
+                text9 = "Please enter your plastic card!";
+
+            }
+            break;
+            case "RUSSIAN": {
+                text0 = "Пожалуйста, укажите организацию, в которой вы работаете!";
+                text1 = "Пожалуйста, введите вашу позицию!";
+                text2 = "Пожалуйста, укажите свой опыт работы!";
+                text3 = "Пожалуйста, введите вашу зарплату!";
+                text4 = "Пожалуйста, пришлите копию паспорта!";
+                text5 = "Пожалуйста, пришлите копию задней страницы паспорта!";
+                text6 = "Пожалуйста, сфотографируйтесь с паспортом и пришлите!";
+                text7 = "Ваш номер телефона, пожалуйста!";
+                text8 = "Ваш второй номер телефона, пожалуйста!";
+                text9 = "Пожалуйста, введите вашу пластиковую карту!";
+            }
+            break;
+            case "KRILL": {
+                text0 = "Илтимос ишлайдиган ташкилтингизни киритинг !";
+                text1 = "Илтимос Лавозимингизни киритинг !";
+                text2 = "Илтимос иш стажингиз киритинг !";
+                text3 = "Илтимос маошингизни киритинг !";
+                text4 = "Илтимос пасперт копиясини жўнатинг !";
+                text5 = "Илтимос пасперт орқа бетининг копиясини жўнатинг !";
+                text6 = "Илтимос пасперт билан расимга тушиб жўнатинг !";
+                text7 = "Илтимос телефон рақамингиз !";
+                text8 = "Илтимос иккинчи телефон рақамингиз !";
+                text9 = "Илтимос пластик картангизни киритинг!";
+            }
+            break;
+        }
+
+        switch (position) {
+            case 0: {
+                BotService.sendMessage(furnitureBot, message, text0);
+            }
+            break;
+            case 1: {
+                BotService.sendMessage(furnitureBot, message, text1);
+            }
+            break;
+            case 2: {
+                BotService.sendMessage(furnitureBot, message, text2);
+            }
+            break;
+            case 3: {
+                BotService.sendMessage(furnitureBot, message, text3);
+            }
+            break;
+            case 4: {
+                BotService.sendMessage(furnitureBot, message, text4);
+            }
+            break;
+            case 5: {
+                BotService.sendMessage(furnitureBot, message, text5);
+            }
+            break;
+            case 6: {
+                BotService.sendMessage(furnitureBot, message, text6);
+            }
+            break;
+            case 7: {
+                BotService.sendMessage(furnitureBot, message, text7);
+            }
+            break;
+            case 8: {
+                BotService.sendMessage(furnitureBot, message, text8);
+            }
+            break;
+            case 9: {
+                BotService.sendMessage(furnitureBot, message, text9);
+            }
+            break;
+
+        }
+    }
 }
