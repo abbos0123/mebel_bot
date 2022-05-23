@@ -7,13 +7,9 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMar
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import uz.project.models.Language;
-import uz.project.models.Order;
-import uz.project.models.Product;
-import uz.project.models.SpecialCategory;
+import uz.project.models.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BotKeyboards {
     public static void setMainManuKeyboard(SendMessage sendMessage, Language language) {
@@ -84,7 +80,7 @@ public class BotKeyboards {
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
     }
 
-    public static void setShareContactKeyboardButton(SendMessage sendMessage, String text) {
+    public static void setShareContactKeyboardButton(SendMessage sendMessage, String text, boolean isLocation) {
         ReplyKeyboardMarkup replyKeyboardMarkup;
         replyKeyboardMarkup = new ReplyKeyboardMarkup();
 
@@ -98,7 +94,11 @@ public class BotKeyboards {
 
         KeyboardButton keyboardButton = new KeyboardButton();
         keyboardButton.setText(text);
-        keyboardButton.setRequestContact(true);
+
+        if (!isLocation)
+            keyboardButton.setRequestContact(true);
+        else
+            keyboardButton.setRequestLocation(true);
 
         keyboardRow1.add(keyboardButton);
 
@@ -247,7 +247,49 @@ public class BotKeyboards {
         sendMessage.setReplyMarkup(inlineKeyboardMarkup);
     }
 
-    public static void setInlineKeyboardButtonForBaskets(SendMessage sendMessage, List<Product> list, boolean isBasket) {
+    public static void setInlineKeyboardButtonForBasketDeleting(SendPhoto sendMessage, Product product, User user, Language language) {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> inlineButtons = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonList1 = new ArrayList<>();
+        List<InlineKeyboardButton> inlineKeyboardButtonList2 = new ArrayList<>();
+
+        var text1 = "Maxsultoni savatchadan olib tashlash";
+        var text2 = "Buyurtma berish";
+
+        switch (language.toString()) {
+            case "RUSSIAN": {
+                text1 = "Удалить товар из корзины";
+                text2 = "Заказ";
+            }
+            break;
+            case "ENGLISH": {
+                text1 = "Delete from basket";
+                text2 = "Order";
+            }
+            break;
+            case "KRILL": {
+                text1 = "Махсултони саватчадан олиб ташлаш";
+                text2 = "Буюртма бериш";
+            }
+            break;
+        }
+        InlineKeyboardButton inlineKeyboardButton1 = new InlineKeyboardButton();
+        inlineKeyboardButton1.setText(text1);
+        inlineKeyboardButton1.setCallbackData("delete_from_basket_" + product.getId());
+
+        InlineKeyboardButton inlineKeyboardButton2 = new InlineKeyboardButton();
+        inlineKeyboardButton2.setText(text2);
+        inlineKeyboardButton2.setCallbackData("ordering_" + user.getId());
+
+        inlineKeyboardButtonList1.add(inlineKeyboardButton1);
+        inlineKeyboardButtonList2.add(inlineKeyboardButton2);
+
+        inlineButtons.add(inlineKeyboardButtonList1);
+        inlineKeyboardMarkup.setKeyboard(inlineButtons);
+        sendMessage.setReplyMarkup(inlineKeyboardMarkup);
+    }
+
+    public static void setInlineKeyboardButtonForBaskets(SendMessage sendMessage, List<Product> list, User user, Language language, boolean isBasket) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> inlineButtons = new ArrayList<>();
         List<InlineKeyboardButton> inlineKeyboardButtonList = new ArrayList<>();
@@ -256,9 +298,9 @@ public class BotKeyboards {
             var button = new InlineKeyboardButton();
             button.setText(Integer.toString(i + 1));
 
-            if (isBasket)
+            if (isBasket) {
                 button.setCallbackData("basket_product_" + list.get(i).getId());
-            else
+            } else
                 button.setCallbackData("simple_product_" + list.get(i).getId());
 
             inlineKeyboardButtonList.add(button);
@@ -272,6 +314,32 @@ public class BotKeyboards {
 
         }
 
+        if (isBasket) {
+            var text2 = "Buyurtma berish";
+
+            switch (language.toString()) {
+                case "RUSSIAN": {
+                    text2 = "Заказ";
+                }
+                break;
+                case "ENGLISH": {
+                    text2 = "Order";
+                }
+                break;
+                case "KRILL": {
+                    text2 = "Буюртма бериш";
+                }
+                break;
+            }
+
+            InlineKeyboardButton inlineKeyboardButton2 = new InlineKeyboardButton();
+            inlineKeyboardButton2.setText(text2);
+            inlineKeyboardButton2.setCallbackData("ordering_" + user.getId());
+
+            List<InlineKeyboardButton> orderList = new ArrayList<>();
+            orderList.add(inlineKeyboardButton2);
+            inlineButtons.add(orderList);
+        }
         inlineKeyboardMarkup.setKeyboard(inlineButtons);
         sendMessage.setReplyMarkup(inlineKeyboardMarkup);
 

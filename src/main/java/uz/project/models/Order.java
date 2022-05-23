@@ -18,7 +18,7 @@ public class Order {
     @Column(name = "name")
     private String name;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "products")
     private List<Product> products;
 
@@ -47,7 +47,12 @@ public class Order {
     @Column(name = "deadline")
     private LocalDate deadline;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "order_time")
+    private LocalDate orderTime;
+
     public Order() {
+
     }
 
     public Order(String name, List<Product> productsId, Long userId, LocalDate date, Location location, FileStorage locationImage, OrderType orderType, LocalDate deadline) {
@@ -141,12 +146,20 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
+    public LocalDate getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(LocalDate orderTime) {
+        this.orderTime = orderTime;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", productsId=" + products +
+                ", products=" + products +
                 ", userId=" + userId +
                 ", date=" + date +
                 ", location=" + location +
@@ -154,6 +167,7 @@ public class Order {
                 ", orderType=" + orderType +
                 ", totalPrice=" + totalPrice +
                 ", deadline=" + deadline +
+                ", orderTime=" + orderTime +
                 '}';
     }
 }

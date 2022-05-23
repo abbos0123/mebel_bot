@@ -81,7 +81,7 @@ public class User {
     private Set<Product> basketProducts;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -280,6 +280,16 @@ public class User {
             basketProducts = new HashSet<>();
 
         return basketProducts.add(product);
+    }
+
+    public boolean removeProductFromBasket(Product product){
+        if (product == null )
+            return false;
+
+        if (basketProducts == null || basketProducts.isEmpty())
+            basketProducts = new HashSet<>();
+
+        return basketProducts.remove(product);
     }
     @Override
     public String toString() {

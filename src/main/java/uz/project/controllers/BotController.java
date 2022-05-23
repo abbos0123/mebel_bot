@@ -2,10 +2,7 @@ package uz.project.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 import uz.project.models.*;
-import uz.project.services.ProductService;
-import uz.project.services.SpecialCategoryService;
-import uz.project.services.StudentService;
-import uz.project.services.UserService;
+import uz.project.services.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +13,20 @@ public class BotController {
 
     private final StudentService studentService;
     private final ProductService productService;
-
+    private final OrderService orderService;
     private final SpecialCategoryService specialCategoryService;
-
     private final UserService userService;
 
-    public BotController(StudentService studentService, ProductService productService, SpecialCategoryService specialCategoryService, UserService userService) {
+    private final LocationService locationService;
+
+
+    public BotController(StudentService studentService, ProductService productService, OrderService orderService, SpecialCategoryService specialCategoryService, UserService userService, LocationService locationService) {
         this.studentService = studentService;
         this.productService = productService;
+        this.orderService = orderService;
         this.specialCategoryService = specialCategoryService;
         this.userService = userService;
+        this.locationService = locationService;
     }
 
     public Student getStudentWithId(Long id) {
@@ -103,5 +104,15 @@ public class BotController {
             return new User();
 
         return userService.saveOrUpdate(user);
+    }
+      public Order saveOrder(Order order) {
+        if (order == null)
+          return null;
+
+        return orderService.saveOrder(order);
+    }
+
+    public Location saveLocation(Location location){
+        return locationService.saveLocation(location);
     }
 }
